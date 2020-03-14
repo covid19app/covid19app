@@ -1,0 +1,36 @@
+{
+  "expo": {
+    "name": "Covid 19 App",
+    "slug": "covid19app",
+    "privacy": "public",
+    "sdkVersion": "36.0.0",
+    "platforms": [
+      "ios",
+      "android",
+      "web"
+    ],
+    "version": "1.0.0",
+    "orientation": "portrait",
+    "icon": "./assets/md-sunny.png",
+    "splash": {
+      "image": "./assets/md-sunny.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
+    "updates": {
+      "fallbackToCacheTimeout": 0
+    },
+    "assetBundlePatterns": [
+      "**/*"
+    ],
+    "ios": {
+      "supportsTablet": true
+    },
+    "android": {
+      "permissions": [
+        "VIBRATE"
+      ]
+    },
+    "scheme": "covid19app"
+  }
+}
