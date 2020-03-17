@@ -3,11 +3,15 @@ import { Alert, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'reac
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 
+import { post } from '../utils/Api';
+import { generateEventInfo, generatePersonId } from '../utils/Events';
+
+const personId = generatePersonId()
+
 export default function LabScreen() {
   const [hasPermission, setHasPermission] = useState(null);
   const [cameraType, setCameraType] = useState(Camera.Constants.Type.front);
-  const [isScanning, setScanning] = useState(false);
-  const [lastScanned, setLastScanned] = useState("Start scanning please!");
+  const [testId, setTestId] = useState("Scan a testkit code please!");
 
   useEffect(() => {
     (async () => {
@@ -17,18 +21,24 @@ export default function LabScreen() {
   }, []);
 
   const handleBarCodeScanned = ({ type, data }) => {
-    setScanning(true);
-    setTimeout(() => setScanning(false), 1000);
-    setLastScanned(data);
-    setTimeout(() => setLastScanned("N/A"), 5000);
+    setTestId(data);
     Vibration.vibrate(250);
   };
 
+  const submitLabResult = (labResult: string) => {
+    const resultEvent = {
+      'eventInfo': generateEventInfo(personId),
+      'testId': testId,
+      'labResult': labResult
+    }
+    post(`/v1/test/${testId}/result`, resultEvent)
+  };
+
   if (hasPermission === null) {
-    return <Text>Requesting for camera permission</Text>;
+    return <Text>Requesting for camera permission...</Text>;
   }
   if (hasPermission === false) {
-    return <Text>No access to camera</Text>;
+    return <Text>No access to camera! Please allow it!</Text>;
   }
 
   return (
@@ -39,18 +49,18 @@ export default function LabScreen() {
         autoFocus={false}
         focusDepth={0.95}
         style={StyleSheet.absoluteFill}
-        onBarCodeScanned={isScanning ? undefined : handleBarCodeScanned}
+        onBarCodeScanned={handleBarCodeScanned}
       />
 
       <View style={styles.lastScannedView}>
-        <Text style={styles.lastScannedText}>{lastScanned}</Text>
+        <Text style={styles.lastScannedText}>{testId}</Text>
       </View>
       <View style={styles.resultButtonsView}>
-        <TouchableOpacity style={[styles.resultButton, styles.healthyButton]} onPress={() => Alert.alert(':)')}>
+        <TouchableOpacity style={[styles.resultButton, styles.healthyButton]} onPress={() => submitLabResult('NOT_INFECTED')}>
           <Ionicons name="md-thumbs-up" style={styles.resultButtonIcon} size={60} />
           <Text style={styles.resultButtonText}>HEALTHY</Text>
         </TouchableOpacity>
-        <TouchableOpacity style={[styles.resultButton, styles.sickButton]} onPress={() => Alert.alert(':(')}>
+        <TouchableOpacity style={[styles.resultButton, styles.sickButton]} onPress={() => submitLabResult('INFECTED')}>
           <Ionicons name="md-thumbs-down" style={styles.resultButtonIcon} size={60} />
           <Text style={styles.resultButtonText}>SICK</Text>
         </TouchableOpacity>
@@ -74,6 +84,7 @@ const styles = StyleSheet.create({
   },
   lastScannedText: {
     color: '#000',
+    fontSize: 20,
   },
   resultButtonsView: {
     padding: 5,
@@ -100,14 +111,4 @@ const styles = StyleSheet.create({
   sickButton: {
     backgroundColor: '#f88',
   },
-  bottomBar: {
-    position: 'absolute',
-    bottom: 0,
-    left: 0,
-    right: 0,
-    backgroundColor: 'rgba(0,0,0,0.5)',
-    padding: 5,
-    flexDirection: 'row',
-  },
 });
-

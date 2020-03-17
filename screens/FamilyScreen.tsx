@@ -6,16 +6,8 @@ export default function FamilyScreen() {
     <View style={styles.container}>
       <FlatList
         data={[
-          {key: 'Devin'},
-          {key: 'Dan'},
-          {key: 'Dominic'},
-          {key: 'Jackson'},
-          {key: 'James'},
-          {key: 'Joel'},
-          {key: 'John'},
-          {key: 'Jillian'},
-          {key: 'Jimmy'},
-          {key: 'Julie'},
+          {key: 'Alice'},
+          {key: 'Bob'},
         ]}
         renderItem={({item}) => <Text style={styles.item}>{item.key}</Text>}
       />
@@ -26,7 +18,7 @@ export default function FamilyScreen() {
 const styles = StyleSheet.create({
   container: {
    flex: 1,
-   paddingTop: 22
+   paddingTop: 22,
   },
   item: {
     padding: 10,

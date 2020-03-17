@@ -14,10 +14,14 @@
   "dependencies": {
     "@expo/vector-icons": "~10.0.0",
     "@react-native-community/masked-view": "0.1.5",
+    "@react-native-community/slider": "^2.0.8",
     "@react-navigation/bottom-tabs": "^5.0.0",
     "@react-navigation/native": "^5.0.0",
     "@react-navigation/stack": "^5.0.0",
     "@react-navigation/web": "~1.0.0-alpha.9",
+    "@types/react-native-uuid": "^1.4.0",
+    "@types/uuid": "^7.0.0",
+    "buffer": "^5.5.0",
     "expo": "~36.0.0",
     "expo-asset": "~8.0.0",
     "expo-camera": "~8.0.0",
@@ -28,14 +32,20 @@
     "react-dom": "~16.9.0",
     "react-native": "https://github.com/expo/react-native/archive/sdk-36.0.0.tar.gz",
     "react-native-gesture-handler": "~1.5.0",
+    "react-native-qrcode-svg": "^6.0.3",
     "react-native-safe-area-context": "0.6.0",
     "react-native-screens": "2.0.0-alpha.12",
+    "react-native-svg": "9.13.3",
+    "react-native-uuid": "^1.4.9",
     "react-native-web": "~0.11.7",
     "react-native-webview": "7.4.3"
   },
   "devDependencies": {
+    "@types/react": "~16.9.0",
+    "@types/react-native": "~0.60.23",
     "@babel/core": "^7.0.0",
     "babel-preset-expo": "~8.0.0",
+    "typescript": "~3.6.3",
     "jest-expo": "~36.0.1"
   },
   "private": true

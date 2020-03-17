@@ -8,10 +8,15 @@ import { createStackNavigator } from '@react-navigation/stack';
 
 import BottomTabNavigator from './navigation/BottomTabNavigator';
 import useLinking from './navigation/useLinking';
+import { loadOrCreateDeviceId } from './utils/Events';
 
 const Stack = createStackNavigator();
 
-export default function App(props) {
+type AppProps = {
+  skipLoadingScreen: boolean,
+}
+
+export default function App(props: AppProps) {
   const [isLoadingComplete, setLoadingComplete] = React.useState(false);
   const [initialNavigationState, setInitialNavigationState] = React.useState();
   const containerRef = React.useRef();
@@ -29,8 +34,10 @@ export default function App(props) {
         // Load fonts
         await Font.loadAsync({
           ...Ionicons.font,
-         'space-mono': require('./assets/fonts/SpaceMono-Regular.ttf'),
         });
+
+        // Load deviceId
+        await loadOrCreateDeviceId()
       } catch (e) {
         // We might want to provide this error information to an error reporting service
         console.warn(e);

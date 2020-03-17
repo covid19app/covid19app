@@ -4,16 +4,26 @@ import TabBarIcon from '../components/TabBarIcon';
 import CdcScreen from '../screens/CdcScreen';
 import FamilyScreen from '../screens/FamilyScreen';
 import LabScreen from '../screens/LabScreen';
-import MeScreen from '../screens/MeScreen';
+import PersonScreen from '../screens/PersonScreen';
+import QrCodeScreen from '../screens/QrCodeScreen';
+import SampleScreen from '../screens/SampleScreen';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Me';
+const INITIAL_ROUTE_NAME = 'Person';
 
 export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+      <BottomTab.Screen
+        name="Sample"
+        component={SampleScreen}
+        options={{
+          title: 'Pair',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-link" />,
+        }}
+      />
       <BottomTab.Screen
         name="Lab"
         component={LabScreen}
@@ -23,18 +33,26 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
       <BottomTab.Screen
-        name="Me"
-        component={MeScreen}
+        name="Person"
+        component={PersonScreen}
         options={{
-          title: 'My Health',
+          title: 'Myself',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
+        }}
+      />
+      <BottomTab.Screen
+        name="QR"
+        component={QrCodeScreen}
+        options={{
+          title: 'QR Code',
+          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-barcode" />,
         }}
       />
       <BottomTab.Screen
         name="Family"
         component={FamilyScreen}
         options={{
-          title: 'My Family',
+          title: 'Family',
           tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-people" />,
         }}
       />
@@ -54,10 +72,14 @@ function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
 
   switch (routeName) {
+    case 'Sample':
+      return 'Pair Person to a TestKit';
     case 'Lab':
       return 'Lab Results';
-    case 'Me':
+    case 'Person':
       return 'My Health';
+    case 'QR':
+      return 'My QR Code';
     case 'Family':
       return 'My Family Health';
     case 'CDC':
