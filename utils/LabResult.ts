@@ -1,0 +1,3 @@
+export enum LabResult {
+  UNKNOWN, IN_PROGRESS, NOT_INFECTED, INFECTED
+}

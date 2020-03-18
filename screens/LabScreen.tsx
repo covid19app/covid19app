@@ -1,114 +1,98 @@
-import React, { useState, useEffect } from 'react';
-import { Alert, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
+import * as React from 'react';
+import { StyleSheet, Text, TouchableOpacity, Vibration, View, ActivityIndicator } from 'react-native';
 import { Camera } from 'expo-camera';
 import { Ionicons } from '@expo/vector-icons';
 
+import BarcodeCamera from '../components/BarcodeCamera';
+import { LabResult } from '../utils/LabResult';
 import { post } from '../utils/Api';
-import { generateEventInfo, generatePersonId } from '../utils/Events';
-
-const personId = generatePersonId()
+import { generateEventInfo } from '../utils/Events';
+import { t, tkeys } from '../utils/i18n';
+import Layout from '../constants/Layout';
+import Color from '../constants/Color';
 
 export default function LabScreen() {
-  const [hasPermission, setHasPermission] = useState(null);
-  const [cameraType, setCameraType] = useState(Camera.Constants.Type.front);
-  const [testId, setTestId] = useState("Scan a testkit code please!");
-
-  useEffect(() => {
-    (async () => {
-      const { status } = await Camera.requestPermissionsAsync();
-      setHasPermission(status === 'granted');
-    })();
-  }, []);
+  const [testId, setTestId] = React.useState(t(tkeys.generic_TestIdPrompt));
+  const [submittingLabResult, setSubmittingLabResult] = React.useState(LabResult.UNKNOWN)
 
   const handleBarCodeScanned = ({ type, data }) => {
     setTestId(data);
     Vibration.vibrate(250);
   };
 
-  const submitLabResult = (labResult: string) => {
+  const submitResult = (labResult: LabResult) => {
     const resultEvent = {
-      'eventInfo': generateEventInfo(personId),
+      'eventInfo': generateEventInfo(),
       'testId': testId,
-      'labResult': labResult
+      'labResult': LabResult[labResult],
     }
-    post(`/v1/test/${testId}/result`, resultEvent)
+    setSubmittingLabResult(labResult)
+    setTestId(t(tkeys.generic_TestIdPrompt))
+    post(`/v1/test/${testId}/result`, resultEvent, () => setSubmittingLabResult(LabResult.UNKNOWN))
   };
-
-  if (hasPermission === null) {
-    return <Text>Requesting for camera permission...</Text>;
-  }
-  if (hasPermission === false) {
-    return <Text>No access to camera! Please allow it!</Text>;
-  }
 
   return (
     <View style={styles.container}>
-      <Camera
-        type={cameraType}
-        useCamera2Api={true}
-        autoFocus={false}
-        focusDepth={0.95}
-        style={StyleSheet.absoluteFill}
-        onBarCodeScanned={handleBarCodeScanned}
-      />
-
-      <View style={styles.lastScannedView}>
-        <Text style={styles.lastScannedText}>{testId}</Text>
-      </View>
-      <View style={styles.resultButtonsView}>
-        <TouchableOpacity style={[styles.resultButton, styles.healthyButton]} onPress={() => submitLabResult('NOT_INFECTED')}>
-          <Ionicons name="md-thumbs-up" style={styles.resultButtonIcon} size={60} />
-          <Text style={styles.resultButtonText}>HEALTHY</Text>
-        </TouchableOpacity>
-        <TouchableOpacity style={[styles.resultButton, styles.sickButton]} onPress={() => submitLabResult('INFECTED')}>
-          <Ionicons name="md-thumbs-down" style={styles.resultButtonIcon} size={60} />
-          <Text style={styles.resultButtonText}>SICK</Text>
-        </TouchableOpacity>
+      <BarcodeCamera type={Camera.Constants.Type.front} onBarCodeScanned={handleBarCodeScanned} />
+      <View style={styles.formView}>
+        <Text style={styles.formDataText}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+        <View style={styles.resultButtonsView}>
+          <TouchableOpacity style={[styles.resultButton, { backgroundColor: Color.notInfected }]}
+              onPress={ () => submitResult(LabResult.NOT_INFECTED) }>
+            <LabResultButtonIcon iconName='md-thumbs-up' isSubmitting={submittingLabResult === LabResult.NOT_INFECTED} />
+            <Text style={styles.resultButtonText}>{t(tkeys.lab_NotInfected)}</Text>
+          </TouchableOpacity>
+          <TouchableOpacity style={[styles.resultButton, { backgroundColor: Color.infected }]}
+              onPress={ () => submitResult(LabResult.INFECTED) }>
+            <LabResultButtonIcon iconName='md-thumbs-down' isSubmitting={submittingLabResult === LabResult.INFECTED} />
+            <Text style={styles.resultButtonText}>{t(tkeys.lab_Infected)}</Text>
+          </TouchableOpacity>
+        </View>
       </View>
     </View>
   );
+}
+
+function LabResultButtonIcon(props: { iconName: string, isSubmitting: boolean }) {
+  if (props.isSubmitting) {
+    return <ActivityIndicator color={Color.text} size='large' />;
+  } else {
+    return <Ionicons name={props.iconName} style={styles.resultButtonIcon} />
+  }
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'center',
+    alignItems: 'stretch',
     justifyContent: 'flex-end',
-    backgroundColor: '#fff',
+    backgroundColor: Color.background,
   },
-  lastScannedView: {
-    width: '100%',
+  formView: {
     alignItems: 'center',
-    backgroundColor: '#fff',
+    backgroundColor: Color.background,
   },
-  lastScannedText: {
-    color: '#000',
-    fontSize: 20,
+  formDataText: {
+    color: Color.text,
+    fontSize: Layout.fontSize,
   },
   resultButtonsView: {
-    padding: 5,
     flexDirection: 'row',
-    backgroundColor: '#fff',
   },
   resultButton: {
     flex: 1,
-    padding: 10,
-    margin: 10,
+    padding: Layout.padding,
+    margin: Layout.margin,
     alignItems: 'center',
     justifyContent: 'center',
   },
   resultButtonIcon: {
-    color: '#000',
+    color: Color.text,
+    fontSize: Layout.largeIconSize,
   },
   resultButtonText: {
-    color: '#000',
-    fontSize: 20,
-  },
-  healthyButton: {
-    backgroundColor: '#8f8',
-  },
-  sickButton: {
-    backgroundColor: '#f88',
+    color: Color.text,
+    fontSize: Layout.fontSize,
   },
 });

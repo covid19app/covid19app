@@ -1,17 +1,19 @@
 import * as React from 'react';
-import { StyleSheet, View } from 'react-native';
+import { StyleSheet, Text, View } from 'react-native';
 
 import QRCode from 'react-native-qrcode-svg';
 
-import Api from '../constants/Api';
 import Layout from '../constants/Layout';
+import { PersonIdContext, getPersonUrl } from '../utils/People';
 
 export default function QrCodeScreen() {
-  const personId = 'person_1'
-  const size = Math.min(Layout.window.width, Layout.window.height)
+  const personId = React.useContext(PersonIdContext)
   return (
     <View style={styles.container}>
-      <QRCode value={`${Api.url}/v1/person/${personId}`} size={size} />
+      <Text style={styles.tip}>This code represents your personal id.
+          Share it with the lab and get the result delivered to your phone!</Text>
+      <QRCode value={getPersonUrl(personId)} size={0.9 * Layout.innerSize} />
+      <Text style={styles.personIdText}>{personId}</Text>
     </View>
   );
 }
@@ -19,7 +21,13 @@ export default function QrCodeScreen() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    padding: 20,
     alignItems: 'center',
+  },
+  tip: {
+    fontSize: Layout.fontSize,
+    padding: Layout.padding,
+  },
+  personIdText: {
+    fontSize: Layout.tinyFontSize,
   },
 });

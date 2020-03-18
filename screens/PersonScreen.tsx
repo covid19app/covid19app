@@ -1,34 +1,35 @@
-import React, { useState } from 'react';
-import { Alert, Image, ScrollView, StyleSheet, Text, View, Linking } from 'react-native';
+import * as React from 'react';
+import { Linking, StyleSheet, Text, View } from 'react-native';
 
-import { generatePersonId } from '../utils/Events';
-import SymptomsForm from '../components/SymptomsForm';
-import { NextSteps } from '../utils/NextSteps';
 import WebView from 'react-native-webview';
-import SubmitButton from '../components/SubmitButton';
 
-// TODO: support multiple people per app
-const personId = generatePersonId()
+import { NextSteps } from '../utils/NextSteps';
+import { PersonIdContext } from '../utils/People';
+import SymptomsForm from '../components/SymptomsForm';
+import ActionButton from '../components/ActionButton';
+import Layout from '../constants/Layout';
+import Color from '../constants/Color';
 
 export default function PersonScreen() {
-  const [nextSteps, setNextSteps] = useState(undefined as NextSteps)
+  const personId = React.useContext(PersonIdContext)
+  const [nextSteps, setNextSteps] = React.useState(undefined as NextSteps)
 
-  if (nextSteps === undefined) {
+  if (!!nextSteps) {
     return (
       <View style={styles.container}>
-        {/* <Image source={require('../assets/temperature_chart.png')} style={styles.temperatureChart} /> */}
-        <SymptomsForm personId={personId} onSubmitResponse={setNextSteps} />
+        <Text style={styles.actionText}>Please take following action: {nextSteps.action}</Text>
+        <WebView source={{ html: nextSteps.html }} />
+        { !!nextSteps.externalLink &&
+          <ActionButton title="Take action" color={Color.defaultAction} onPress={ () => Linking.openURL(nextSteps.externalLink) } />
+        }
+        <ActionButton title="Enter symptoms" color={Color.defaultAction} onPress={ () => setNextSteps(undefined) } />
       </View>
     );
   } else {
     return (
       <View style={styles.container}>
-        <Text style={styles.actionText}>Please {nextSteps.action}</Text>
-        <WebView source={{ html: nextSteps.html }} />
-        { nextSteps.externalLink !== undefined && nextSteps.externalLink !== null &&
-          <SubmitButton title="take action" onPress={() => Linking.openURL(nextSteps.externalLink)}/>
-        }
-        <SubmitButton title="enter symptoms" onPress={() => setNextSteps(undefined)}/>
+        {/* <Image source={require('../assets/temperature_chart.png')} style={styles.temperatureChart} /> */}
+        <SymptomsForm personId={personId} onSubmitResponse={setNextSteps} />
       </View>
     );
   }
@@ -42,10 +43,10 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: '#fff',
+    backgroundColor: Color.background,
   },
   actionText: {
-    color: '#000',
-    fontSize: 20,
+    color: Color.text,
+    fontSize: Layout.fontSize,
   },
 });

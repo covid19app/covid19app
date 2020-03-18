@@ -1,13 +1,17 @@
 import * as React from 'react';
 import { Slider, StyleSheet, Text, View } from 'react-native';
 
-// enum TemperatureScale {
-//   Celsius,
-//   Fahrenheit,
-// }
+import { t, tkeys } from '../utils/i18n';
+import Layout from '../constants/Layout';
+import Color from '../constants/Color';
 
-type FeverSliderProps = {
-  temperatureScale: string,
+// import * as RNLocalize from 'react-native-localize';
+//
+// const cachedTemperatureUnit = RNLocalize.getTemperatureUnit()
+
+const cachedTemperatureUnit: string = 'fahrenheit' // RNLocalize.getTemperatureUnit()
+
+interface FeverSliderProps {
   feverInCelsius: number,
   onValueChange?: (feverInCelsius: number) => void,
 }
@@ -15,7 +19,7 @@ type FeverSliderProps = {
 export default function FeverSlider(props: FeverSliderProps) {
   return (
     <View style={styles.container}>
-      <Text style={styles.title}>Fever</Text>
+      <Text style={styles.title}>{t(tkeys.symptoms_Fever)}</Text>
       <Slider
         style={styles.slider}
         minimumValue={36}
@@ -23,16 +27,16 @@ export default function FeverSlider(props: FeverSliderProps) {
         value={props.feverInCelsius}
         onValueChange={props.onValueChange}
       />
-      <Text style={styles.value}>{temperatureToString(props.temperatureScale, props.feverInCelsius)}</Text>
+      <Text style={styles.value}>{temperatureToString(props.feverInCelsius)}</Text>
     </View>
   );
 }
 
-function temperatureToString(temperatureScale: string, temperatureInC: number): string {
-  switch (temperatureScale) {
-    case 'C':
+function temperatureToString(temperatureInC: number): string {
+  switch (cachedTemperatureUnit) {
+    case 'celsius':
       return `${temperatureInC && +temperatureInC.toFixed(1)} C`
-    case 'F':
+    case 'fahrenheit':
       const temperatureInF = (temperatureInC * 9/5) + 32
       return `${temperatureInF && +temperatureInF.toFixed(1)} F`
   }
@@ -41,19 +45,19 @@ function temperatureToString(temperatureScale: string, temperatureInC: number): 
 const styles = StyleSheet.create({
   container: {
     flexDirection: 'row',
-    padding: 10,
+    padding: Layout.padding,
   },
   title: {
-    flex: 2,
-    color: '#000',
-    fontSize: 20,
+    flex: 3,
+    color: Color.text,
+    fontSize: Layout.fontSize,
   },
   slider: {
     flex: 7,
   },
   value: {
     flex: 3,
-    color: '#000',
-    fontSize: 20,
+    color: Color.text,
+    fontSize: Layout.fontSize,
   },
 });

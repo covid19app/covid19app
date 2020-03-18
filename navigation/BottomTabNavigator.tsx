@@ -1,15 +1,36 @@
 import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+
 import TabBarIcon from '../components/TabBarIcon';
-import CdcScreen from '../screens/CdcScreen';
-import FamilyScreen from '../screens/FamilyScreen';
+import PairScreen from '../screens/PairScreen';
 import LabScreen from '../screens/LabScreen';
 import PersonScreen from '../screens/PersonScreen';
 import QrCodeScreen from '../screens/QrCodeScreen';
-import SampleScreen from '../screens/SampleScreen';
+import FamilyScreen from '../screens/FamilyScreen';
+import CdcScreen from '../screens/CdcScreen';
+
+const INITIAL_ROUTE_NAME = 'Person';
 
 const BottomTab = createBottomTabNavigator();
-const INITIAL_ROUTE_NAME = 'Person';
+
+function getHeaderTitle(route) {
+  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME
+
+  switch (routeName) {
+    case 'Pair':
+      return "Pair Person to a TestKit"
+    case 'Lab':
+      return "Lab Results"
+    case 'Person':
+      return "My Health"
+    case 'QR':
+      return "My QR Code"
+    case 'Family':
+      return "My Family Health"
+    case 'CDC':
+      return "CDC (Disease Experts)"
+  }
+}
 
 export default function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) });
@@ -17,72 +38,53 @@ export default function BottomTabNavigator({ navigation, route }) {
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
-        name="Sample"
-        component={SampleScreen}
+        name='Pair'
+        component={PairScreen}
         options={{
-          title: 'Pair',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-link" />,
+          title: "Pair",
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-link' />,
         }}
       />
       <BottomTab.Screen
-        name="Lab"
+        name='Lab'
         component={LabScreen}
         options={{
-          title: 'Lab',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-flask" />,
+          title: "Lab",
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-flask' />,
         }}
       />
       <BottomTab.Screen
-        name="Person"
+        name='Person'
         component={PersonScreen}
         options={{
-          title: 'Myself',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-person" />,
+          title: "Myself",
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-person' />,
         }}
       />
       <BottomTab.Screen
-        name="QR"
+        name='QR'
         component={QrCodeScreen}
         options={{
-          title: 'QR Code',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-barcode" />,
+          title: "QR Code",
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-barcode' />,
         }}
       />
       <BottomTab.Screen
-        name="Family"
+        name='Family'
         component={FamilyScreen}
         options={{
-          title: 'Family',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-people" />,
+          title: "Family",
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-people' />,
         }}
       />
       <BottomTab.Screen
-        name="CDC"
+        name='CDC'
         component={CdcScreen}
         options={{
-          title: 'CDC',
-          tabBarIcon: ({ focused }) => <TabBarIcon focused={focused} name="md-book" />,
+          title: "CDC",
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-book' />,
         }}
       />
     </BottomTab.Navigator>
   );
-}
-
-function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME;
-
-  switch (routeName) {
-    case 'Sample':
-      return 'Pair Person to a TestKit';
-    case 'Lab':
-      return 'Lab Results';
-    case 'Person':
-      return 'My Health';
-    case 'QR':
-      return 'My QR Code';
-    case 'Family':
-      return 'My Family Health';
-    case 'CDC':
-      return 'CDC (Disease Experts)';
-  }
 }

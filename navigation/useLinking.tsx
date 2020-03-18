@@ -8,7 +8,7 @@ export default function(containerRef: React.RefObject<NavigationContainerRef>) {
       Root: {
         path: 'root',
         screens: {
-          'Sample': 'sample',
+          'Pair': 'sample',
           'Lab': 'lab',
           'Person': 'person',
           'QR': 'qr',

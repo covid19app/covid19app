@@ -3,8 +3,8 @@
 // }
 
 export type NextSteps = {
-  // action: Action,
-  action: string,
-  html?: string,
-  externalLink?: string,
+  // action: Action
+  action: string
+  html?: string
+  externalLink?: string
 }

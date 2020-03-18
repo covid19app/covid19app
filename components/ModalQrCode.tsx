@@ -1,29 +1,29 @@
-import React, {Component} from 'react';
-import {Modal, Text, TouchableHighlight, View, Alert} from 'react-native';
-
-import QRCode from 'react-native-qrcode-svg';
-
-type ModalQrCodeProps = {
-  url: string,
-}
-
 // TODO: Modal does not work on web!!!
 
-export default function ModalQrCode(props: ModalQrCodeProps) {
-  const [isVisible, setIsVisible] = React.useState(false);
+// import React, {Component} from 'react';
+// import {Modal, Text, TouchableHighlight, View, Alert} from 'react-native';
 
-  return (
-    <View>
-      <Modal animationType="none" transparent={false} visible={isVisible}>
-        <TouchableHighlight onPress={() => setIsVisible(!isVisible)}>
-          <View>
-            <QRCode value={props.url} size={128} />
-          </View>
-         </TouchableHighlight>
-      </Modal>
-      <TouchableHighlight onPress={() => setIsVisible(!isVisible)}>
-        <Text>QR</Text>
-      </TouchableHighlight>
-    </View>
-  );
-}
+// import QRCode from 'react-native-qrcode-svg';
+
+// type ModalQrCodeProps = {
+//   url: string,
+// }
+
+// export default function ModalQrCode(props: ModalQrCodeProps) {
+//   const [isVisible, setIsVisible] = React.useState(false);
+
+//   return (
+//     <View>
+//       <Modal animationType="none" transparent={false} visible={isVisible}>
+//         <TouchableHighlight onPress={() => setIsVisible(!isVisible)}>
+//           <View>
+//             <QRCode value={props.url} size={128} />
+//           </View>
+//          </TouchableHighlight>
+//       </Modal>
+//       <TouchableHighlight onPress={() => setIsVisible(!isVisible)}>
+//         <Text>QR</Text>
+//       </TouchableHighlight>
+//     </View>
+//   );
+// }
