@@ -1,10 +1,10 @@
 import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
-
 import QRCode from 'react-native-qrcode-svg';
 
 import Layout from '../constants/Layout';
-import { PersonIdContext, getPersonUrl } from '../utils/People';
+import { getPersonUrl } from '../utils/Api';
+import { PersonIdContext } from '../utils/Device';
 
 export default function QrCodeScreen() {
   const personId = React.useContext(PersonIdContext)
@@ -15,7 +15,7 @@ export default function QrCodeScreen() {
       <QRCode value={getPersonUrl(personId)} size={0.9 * Layout.innerSize} />
       <Text style={styles.personIdText}>{personId}</Text>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -30,4 +30,4 @@ const styles = StyleSheet.create({
   personIdText: {
     fontSize: Layout.tinyFontSize,
   },
-});
+})

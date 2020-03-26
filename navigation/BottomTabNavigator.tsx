@@ -1,17 +1,17 @@
-import * as React from 'react';
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
-import PairScreen from '../screens/PairScreen';
+import CdcScreen from '../screens/CdcScreen';
+import FamilyScreen from '../screens/FamilyScreen';
 import LabScreen from '../screens/LabScreen';
+import PairScreen from '../screens/PairScreen';
 import PersonScreen from '../screens/PersonScreen';
 import QrCodeScreen from '../screens/QrCodeScreen';
-import FamilyScreen from '../screens/FamilyScreen';
-import CdcScreen from '../screens/CdcScreen';
 
-const INITIAL_ROUTE_NAME = 'Person';
+const INITIAL_ROUTE_NAME = 'Person'
 
-const BottomTab = createBottomTabNavigator();
+const BottomTab = createBottomTabNavigator()
 
 function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME
@@ -33,7 +33,7 @@ function getHeaderTitle(route) {
 }
 
 export default function BottomTabNavigator({ navigation, route }) {
-  navigation.setOptions({ headerTitle: getHeaderTitle(route) });
+  navigation.setOptions({ headerTitle: getHeaderTitle(route) })
 
   return (
     <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
@@ -86,5 +86,5 @@ export default function BottomTabNavigator({ navigation, route }) {
         }}
       />
     </BottomTab.Navigator>
-  );
+  )
 }

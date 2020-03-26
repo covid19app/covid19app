@@ -1,32 +1,30 @@
 import Config from '../constants/Config';
 
-type onSuccessType = (value: any) => any | PromiseLike<any>
-
-function fetchHelper(method: string, url: string, headers: HeadersInit, body: string, onSuccess?: onSuccessType) {
-  fetch(`${Config.apiServerUrl}/${url}`, { method: method, headers: headers, body: body })
-    .then((response) => response.json())
-    .then((responseJson) => {
-      if (!!onSuccess) {
-        onSuccess(responseJson)
-      }
-    })
-    .catch((error) => {
+async function fetchHelper(method: string, url: string, headers: HeadersInit, body: string): Promise<any> {
+  return fetch(`${Config.API_SERVER_URL}${url}`, { method, headers, body })
+    .then(response => response.json())
+    .catch(error => {
       console.warn(error)
+      throw error
     })
 }
 
-export function post(url: string, payload: any, onSuccess?: onSuccessType) {
+export async function post(url: string, payload: any): Promise<any> {
   const headers = {
     'Accept': 'application/json',
     'Content-Type': 'application/json',
   }
-  fetchHelper('POST', url, headers, JSON.stringify(payload), onSuccess)
+  return await fetchHelper('POST', url, headers, JSON.stringify(payload))
 }
 
-export function put(url: string, payload: any, onSuccess?: onSuccessType) {
-  fetchHelper('PUT', url, { 'Content-Type': 'application/json' }, JSON.stringify(payload), onSuccess)
+export async function put(url: string, payload: any): Promise<any> {
+  return await fetchHelper('PUT', url, { 'Content-Type': 'application/json' }, JSON.stringify(payload))
 }
 
-export function get(url: string, onSuccess?: onSuccessType) {
-  fetchHelper('GET', url, { 'Accept': 'application/json' }, undefined, onSuccess)
+export async function get(url: string): Promise<any> {
+  return await fetchHelper('GET', url, { 'Accept': 'application/json' }, undefined)
+}
+
+export function getPersonUrl(personId: string): string {
+  return `${Config.API_SERVER_URL}/v1/person/${personId}`
 }

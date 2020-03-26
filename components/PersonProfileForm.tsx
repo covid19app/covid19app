@@ -1,32 +1,30 @@
 import * as React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
+import Color from '../constants/Color';
+import { publishEvent } from '../utils/Events';
+import { t, tkeys } from '../utils/i18n';
+import { PersonProfileEvent, Sex } from '../utils/schema';
 import ActionButton from './ActionButton';
 import NamedPicker from './NamedPicker';
 import NamedTextInput from './NamedTextInput';
-import { PersonProfile } from '../utils/PersonProfile';
-import { Sex } from '../utils/Sex';
-import { generateEventInfo } from '../utils/Events';
-import { post } from '../utils/Api';
-
-import { t, tkeys } from '../utils/i18n';
-import Color from '../constants/Color';
 
 const SexKeys = Object.keys(Sex).filter(key => !isNaN(Number(Sex[key])))
 
 export interface PersonProfileFormProps {
   personId: string
-  onSubmitResponse?: () => void
+  onSubmit?: (form: PersonProfileEvent) => void
+  onSkip?: () => void
 }
 
 export function PersonProfileForm(props: PersonProfileFormProps) {
-  const blankPersonProfile = {personId: props.personId} as PersonProfile
-  const [personProfile, setPersonProfile] = React.useState(blankPersonProfile)
+  const blankPersonProfileEvent = {personId: props.personId, deleted: false} as PersonProfileEvent
+  const [personProfile, setPersonProfile] = React.useState<PersonProfileEvent>(blankPersonProfileEvent)
 
-  const submitPersonProfile = (personProfile: PersonProfile) => {
-    const event = {...(personProfile as any), eventInfo: generateEventInfo()}
-    post(`/v1/person/${props.personId}/profile`, event, props.onSubmitResponse)
-  };
+  const submitPersonProfile = async () => {
+    const response = await publishEvent(`/v1/person/${props.personId}/profile`, personProfile)
+    props.onSubmit(personProfile)
+  }
 
   return (
     <View style={styles.container}>
@@ -51,15 +49,15 @@ export function PersonProfileForm(props: PersonProfileFormProps) {
       <ActionButton
         color={Color.secondaryAction}
         title={t(tkeys.generic_Skip)}
-        onPress={() => submitPersonProfile(blankPersonProfile)}
+        onPress={props.onSkip}
       />
       <ActionButton
         color={Color.defaultAction}
         title={t(tkeys.generic_Submit)}
-        onPress={() => submitPersonProfile(personProfile)}
+        onPress={submitPersonProfile}
       />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -72,4 +70,4 @@ const styles = StyleSheet.create({
     flex: 1,
     flexDirection: 'column',
   },
-});
+})

@@ -1,15 +1,14 @@
+import { Camera } from 'expo-camera';
 import * as React from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
-import { Camera } from 'expo-camera';
 
-import BarcodeCamera from '../components/BarcodeCamera';
 import ActionButton from '../components/ActionButton';
-import { post } from '../utils/Api';
-import { generateEventInfo } from '../utils/Events';
-import Layout from '../constants/Layout';
+import BarcodeCamera from '../components/BarcodeCamera';
 import Color from '../constants/Color';
-
+import Layout from '../constants/Layout';
+import { publishEvent } from '../utils/Events';
 import { t, tkeys } from '../utils/i18n';
+import { TestPairEvent } from '../utils/schema';
 
 const personIdRegExp = new RegExp('.*\/person\/(.*)')
 const testIdRegExp = new RegExp('(.*)')
@@ -20,24 +19,20 @@ export default function PairScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     if (personIdRegExp.test(data)) {
-      setPersonId(personIdRegExp.exec(data)[1]);
-      Vibration.vibrate(250);
+      setPersonId(personIdRegExp.exec(data)[1])
+      Vibration.vibrate(250)
     }
     if (testIdRegExp.test(data)) {
-      setTestId(testIdRegExp.exec(data)[1]);
-      Vibration.vibrate(250);
+      setTestId(testIdRegExp.exec(data)[1])
+      Vibration.vibrate(250)
     }
   }
 
-  const submitPair = () => {
-    const pairEvent = {
-      'eventInfo': generateEventInfo(),
-      'testId': testId,
-      'personId': personId,
-    }
+  const submitTestPair = async () => {
+    const testPairEvent: TestPairEvent = { personId, testId }
     setPersonId(t(tkeys.generic_PersonIdPrompt))
     setTestId(t(tkeys.generic_TestIdPrompt))
-    post(`/v1/test/${testId}/pair`, pairEvent)
+    await publishEvent(`/v1/test/${testId}/pair`, testPairEvent)
   }
 
   return (
@@ -47,7 +42,7 @@ export default function PairScreen() {
         <Text style={styles.formDataText}>{t(tkeys.generic_Person)}: {personId}</Text>
         <Text style={styles.formDataText}>{t(tkeys.generic_TestKit)}: {testId}</Text>
         <View style={styles.submitButtonView}>
-          <ActionButton title={t(tkeys.generic_Submit)} onPress={() => submitPair()} />
+          <ActionButton title={t(tkeys.generic_Submit)} onPress={submitTestPair} />
         </View>
       </View>
     </View>
@@ -71,4 +66,4 @@ const styles = StyleSheet.create({
   submitButtonView: {
     width: '100%',
   }
-});
+})

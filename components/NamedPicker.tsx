@@ -1,12 +1,12 @@
 import * as React from 'react';
 import { Picker, PickerProps, StyleSheet, Text, View } from 'react-native';
 
-import Layout from '../constants/Layout';
 import Color from '../constants/Color';
+import Layout from '../constants/Layout';
 
 interface NamedPickerProps extends PickerProps {
   title: string
-  items: Array<any>
+  items: any[]
 }
 
 export default function NamedPicker(props: NamedPickerProps) {
@@ -15,11 +15,11 @@ export default function NamedPicker(props: NamedPickerProps) {
       <Text style={styles.title}>{props.title}</Text>
       <Picker {...props} style={styles.picker}>
         {props.items.map((item, index) => {
-          return (<Picker.Item label={item} value={index} key={index}/>) 
+          return <Picker.Item label={item} value={index} key={index}/>
         })}
       </Picker>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -37,4 +37,4 @@ const styles = StyleSheet.create({
     flex: 7,
     backgroundColor: Color.inputBackground,
   },
-});
+})

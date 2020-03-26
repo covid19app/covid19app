@@ -1,12 +1,12 @@
-import * as React from 'react';
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { Ionicons } from '@expo/vector-icons';
 import { useIsFocused } from '@react-navigation/native';
 import { Camera } from 'expo-camera';
 import { Props as CameraProps } from 'expo-camera/build/Camera.types';
+import * as React from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
-import { t, tkeys } from '../utils/i18n';
-import { Ionicons } from '@expo/vector-icons';
 import Layout from '../constants/Layout';
+import { t, tkeys } from '../utils/i18n';
 
 interface BarcodeCameraProps extends CameraProps {
 }
@@ -54,9 +54,9 @@ export default function BarcodeCamera(props: BarcodeCameraProps) {
           <Ionicons name='md-reverse-camera' style={styles.reverseIcon} />
         </TouchableOpacity>
       </View>
-    );
+    )
   } else {
-    return <View />;
+    return <View />
   }
 }
 

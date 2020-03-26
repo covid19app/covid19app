@@ -2,8 +2,8 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 
 import { PersonProfileForm, PersonProfileFormProps } from '../components/PersonProfileForm';
-import Layout from '../constants/Layout';
 import Color from '../constants/Color';
+import Layout from '../constants/Layout';
 
 interface WelcomeScreenProps extends PersonProfileFormProps {
 }
@@ -15,7 +15,7 @@ export default function WelcomeScreen(props: WelcomeScreenProps) {
       <Text style={styles.text}>Thank you joining us!</Text>
       <PersonProfileForm {...props} />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({

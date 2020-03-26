@@ -1,17 +1,17 @@
-import * as React from 'react';
-import { ActivityIndicator, Linking, StyleSheet, View, TouchableOpacity } from 'react-native';
-import { WebView, WebViewNavigation } from 'react-native-webview';
 import { Ionicons } from '@expo/vector-icons';
+import * as React from 'react';
+import { ActivityIndicator, Linking, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { WebView, WebViewNavigation } from 'react-native-webview';
 
-import Layout from '../constants/Layout';
 import Color from '../constants/Color';
+import Layout from '../constants/Layout';
 
 interface WebBrowserProps {
   url: string,
 }
 
 export default function WebBrowser(props: WebBrowserProps) {
-  const [webViewNavigation, setWebViewNavigation] = React.useState({} as WebViewNavigation)
+  const [webViewNavigation, setWebViewNavigation] = React.useState<WebViewNavigation>()
   const webViewRef = React.useRef<WebView>()
 
   return (
@@ -26,22 +26,22 @@ export default function WebBrowser(props: WebBrowserProps) {
         onNavigationStateChange={setWebViewNavigation}
       />
       <View style={styles.tabBarContainer}>
-        <TouchableOpacity disabled={!webViewNavigation.canGoBack}
-            onPress={ () => webViewNavigation.canGoBack && webViewRef.current && webViewRef.current.goBack() }>
+        <TouchableOpacity disabled={!webViewNavigation?.canGoBack}
+            onPress={ () => webViewNavigation?.canGoBack && webViewRef.current?.goBack() }>
           <Ionicons name='md-arrow-round-back' style={styles.icon} size={Layout.largeIconSize}
-              color={webViewNavigation.canGoBack ? Color.text : styles.tabBarContainer.backgroundColor} />
+              color={webViewNavigation?.canGoBack ? Color.text : styles.tabBarContainer.backgroundColor} />
         </TouchableOpacity>
         <TouchableOpacity onPress={ () => Linking.openURL(props.url) }>
           <Ionicons name='md-browsers' style={styles.icon} size={Layout.largeIconSize} />
         </TouchableOpacity>
-        <TouchableOpacity disabled={!webViewNavigation.canGoForward}
-            onPress={ () => webViewNavigation.canGoForward && webViewRef.current && webViewRef.current.goForward() }>
+        <TouchableOpacity disabled={!webViewNavigation?.canGoForward}
+            onPress={ () => webViewNavigation?.canGoForward && webViewRef.current?.goForward() }>
           <Ionicons name='md-arrow-round-forward' style={styles.icon} size={Layout.largeIconSize}
-              color={webViewNavigation.canGoForward ? Color.text : styles.tabBarContainer.backgroundColor} />
+              color={webViewNavigation?.canGoForward ? Color.text : styles.tabBarContainer.backgroundColor} />
         </TouchableOpacity>
       </View>
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -56,4 +56,4 @@ const styles = StyleSheet.create({
   },
   icon: {
   },
-});
+})

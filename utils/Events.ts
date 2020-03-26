@@ -1,42 +1,31 @@
 import { AsyncStorage } from 'react-native';
 
-import uuid from 'react-native-uuid';
+import { post } from './Api';
+import { getDeviceInfo } from './Device';
+// import { getLocationAsync, locationDataToS2 } from './Geo';
+import { generateEventId } from './Ids';
+import { Event, EventInfo } from './schema';
 
-import EventInfo from './EventInfo';
-import { PersistanceKey } from './Persistance';
-
-var cachedDeviceId: string = undefined
-
-export async function loadOrCreateDeviceId(): Promise<string> {
-  cachedDeviceId = await AsyncStorage.getItem(PersistanceKey.DEVICE_ID)
-  if (!cachedDeviceId) {
-    cachedDeviceId = generateDeviceId()
-    await AsyncStorage.setItem(PersistanceKey.DEVICE_ID, cachedDeviceId)
+async function generateEventInfo(): Promise<EventInfo> {
+  const deviceInfo = getDeviceInfo()
+  const eventInfo: EventInfo = {
+    eventId: generateEventId(),
+    deviceId: deviceInfo.deviceId,
+    timestampInEpochS: Date.now() / 1000,
+    // s2Cell: locationDataToS2(await getLocationAsync()),
   }
-  return cachedDeviceId
+  return eventInfo
 }
 
-
-function generateId(prefix: String): string {
-  return `${prefix}__${uuid.v4()}`
-}
-
-export function generateDeviceId(): string {
-  return generateId('device')
-}
-
-export function generatePersonId(): string {
-  return generateId('person')
-}
-
-export function generateEventId(): string {
-  return generateId('event')
-}
-
-export function generateTestId(): string {
-  return generateId('test')
-}
-
-export function generateEventInfo(): EventInfo {
-  return new EventInfo(generateEventId(), cachedDeviceId, Date.now())
+export async function publishEvent<T extends Event, R>(url: string, event: T): Promise<R> {
+  const eventInfo = await generateEventInfo()
+  const fullEvent = {eventInfo, ...event}
+  const todoEventKey = `TODO-${eventInfo.eventId}`
+  await AsyncStorage.multiSet([
+    [eventInfo.eventId, JSON.stringify(fullEvent)],
+    [todoEventKey, url],
+  ])
+  const response = await post(url, fullEvent)
+  AsyncStorage.removeItem(todoEventKey)
+  return response
 }

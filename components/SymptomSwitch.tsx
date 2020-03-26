@@ -1,10 +1,10 @@
+import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { StyleSheet, Switch, SwitchProps, Text, View } from 'react-native';
 import { TouchableOpacity } from 'react-native-gesture-handler';
-import { Ionicons } from '@expo/vector-icons';
 
-import Layout from '../constants/Layout';
 import Color from '../constants/Color';
+import Layout from '../constants/Layout';
 
 interface SymptomSwitchProps extends SwitchProps {
   title: string
@@ -28,7 +28,7 @@ export default function SymptomSwitch(props: SymptomSwitchProps) {
       </View>
       { showTip && <Text style={styles.tip}>{props.tip}</Text> }
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
@@ -65,4 +65,4 @@ const styles = StyleSheet.create({
     color: Color.text,
     paddingLeft: Layout.padding,
   },
-});
+})

@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Slider, StyleSheet, Text, View } from 'react-native';
 
-import { t, tkeys } from '../utils/i18n';
-import Layout from '../constants/Layout';
 import Color from '../constants/Color';
+import Layout from '../constants/Layout';
+import { t, tkeys } from '../utils/i18n';
 
 // import * as RNLocalize from 'react-native-localize';
 //
@@ -29,7 +29,7 @@ export default function FeverSlider(props: FeverSliderProps) {
       />
       <Text style={styles.value}>{temperatureToString(props.feverInCelsius)}</Text>
     </View>
-  );
+  )
 }
 
 function temperatureToString(temperatureInC: number): string {
@@ -60,4 +60,4 @@ const styles = StyleSheet.create({
     color: Color.text,
     fontSize: Layout.fontSize,
   },
-});
+})
