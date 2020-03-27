@@ -4,8 +4,8 @@ import { ScrollView, StyleSheet, Text, View } from 'react-native';
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 import { publishEvent } from '../utils/Events';
-import { t, tkeys } from '../utils/i18n';
-import { NextSteps, PersonSymptomsEvent } from '../utils/schema';
+import { getCurrentLocale, t, tkeys } from '../utils/i18n';
+import { ExperimentalEventInfo, NextSteps, PersonSymptomsEvent } from '../utils/schema';
 import ActionButton from './ActionButton';
 import FeverSlider from './FeverSlider';
 import SymptomSwitch from './SymptomSwitch';
@@ -20,7 +20,11 @@ export default function SymptomsForm(props: SymptomsFormProps) {
   const [symptoms, setSymptoms] = React.useState(blankPersonSymptomsEvent)
 
   const submitPersonSymptomsEvent = async () => {
-    const response = await publishEvent(`/v1/person/${props.personId}/symptoms`, symptoms)
+    const personSymptomsEvent: PersonSymptomsEvent & ExperimentalEventInfo = {
+      ...symptoms,
+      locale: getCurrentLocale(),
+    }
+    const response = await publishEvent(`/v1/person/${props.personId}/symptoms`, personSymptomsEvent)
     props.onSubmitResponse(response as NextSteps)
   }
 
