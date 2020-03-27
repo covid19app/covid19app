@@ -1,16 +1,16 @@
 import { AsyncStorage } from 'react-native';
 
 import { post } from './Api';
-import { getDeviceInfo } from './Device';
+import { getDeviceEntity } from './Device';
 // import { getLocationAsync, locationDataToS2 } from './Geo';
 import { generateEventId } from './Ids';
 import { Event, EventInfo } from './schema';
 
 async function generateEventInfo(): Promise<EventInfo> {
-  const deviceInfo = getDeviceInfo()
+  const deviceEntity = getDeviceEntity()
   const eventInfo: EventInfo = {
     eventId: generateEventId(),
-    deviceId: deviceInfo.deviceId,
+    deviceId: deviceEntity?.deviceId,
     timestampInEpochS: Date.now() / 1000,
     // s2Cell: locationDataToS2(await getLocationAsync()),
   }

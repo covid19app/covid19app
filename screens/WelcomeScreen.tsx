@@ -4,6 +4,7 @@ import { StyleSheet, Text, View } from 'react-native';
 import { PersonProfileForm, PersonProfileFormProps } from '../components/PersonProfileForm';
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
+import { t, tkeys } from '../utils/i18n';
 
 interface WelcomeScreenProps extends PersonProfileFormProps {
 }
@@ -11,8 +12,8 @@ interface WelcomeScreenProps extends PersonProfileFormProps {
 export default function WelcomeScreen(props: WelcomeScreenProps) {
   return (
     <View style={styles.standAloneContainer}>
-      <Text style={styles.text}>Welcome!</Text>
-      <Text style={styles.text}>Thank you joining us!</Text>
+      <Text style={styles.text}>{t(tkeys.welcome_Title)}</Text>
+      <Text style={styles.text}>{t(tkeys.welcome_Tip)}</Text>
       <PersonProfileForm {...props} />
     </View>
   )

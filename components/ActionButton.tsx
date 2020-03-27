@@ -9,7 +9,7 @@ interface ActionButtonProps {
   title?: string
   color?: string
   iconName?: string
-  onPress?: (event: GestureResponderEvent) => void
+  onPress: (event: GestureResponderEvent) => void
 }
 
 export default function ActionButton(props: ActionButtonProps) {
@@ -17,7 +17,7 @@ export default function ActionButton(props: ActionButtonProps) {
 
   const onPress = async (event: GestureResponderEvent) => {
     setIsInprogress(true)
-    await props.onPress(event)
+    props.onPress(event)
     setIsInprogress(false)
   }
 

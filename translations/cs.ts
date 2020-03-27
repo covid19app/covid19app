@@ -1,6 +1,11 @@
 export default {
+  family_AddNewPerson: 'Přidat novou osobu',
+
   generic_CameraRequestingPermissions: 'Žádáme přístup ke kameře...',
   generic_CameraMissingPermissions: 'Applikace nemá přístup ke kameře! Prosím povolte ho!',
+  generic_Cancel: 'Ukončit',
+  generic_DefaultPersonName: 'Já',
+  generic_OpenExternalLink: 'Otevřít odkaz',
   generic_Person: 'Osoba',
   generic_PersonIdPrompt: 'Naskenujte kód prosím!',
   generic_Skip: 'Přeskočit',
@@ -8,18 +13,56 @@ export default {
   generic_TestKit: 'TestKit',
   generic_TestIdPrompt: 'Naskenujte kód prosím!',
 
+  health_EnterSymptoms: 'Zadejte příznaky',
+
   lab_Infected: 'Nakažený',
   lab_NotInfected: 'Nenakažený',
 
+  navigation_FamilyHeader: 'Zdraví mojí rodiny',
+  navigation_FamilyIcon: 'Rodina',
+  navigation_LabHeader: 'Výsledky z laboratoře',
+  navigation_LabIcon: 'Laboratoř',
+  navigation_HealthHeader: 'Zdraví: $PERSON_NAME',
+  navigation_HealthIcon: 'Zdraví',
+  navigation_NextStepsHeader: 'Další kroky: $PERSON_NAME',
+  navigation_NextStepsIcon: 'Další kroky',
+  navigation_PairHeader: 'Párovaní osoby a testu',
+  navigation_PairIcon: 'Párovaní',
+  navigation_QRHeader: 'Qr Code: $PERSON_NAME',
+  navigation_QRIcon: 'QR Code',
+  navigation_ResourcesHeader: 'Ministerstvo zdravotnictví',
+  navigation_ResourcesIcon: 'Informace',
+
+  // symptoms_Chills: 'Chills',
+  // symptoms_ChillsTip: undefined,
   symptoms_DryCough: 'Suchý kašel',
   symptoms_DryCoughTip: 'Kašlete často? Alespoň třikrát více než obvykle?',
   symptoms_Fatigue: 'Vyčerpání',
   symptoms_FatigueTip: 'Cítíte se unavení mnohem více než obvykle (přistejné aktivitě)?',
   symptoms_Fever: 'Horečka',
   symptoms_FeverTip: 'Změřte si prosím svojí teplotu a zadejte zde výsledek.',
+  // symptoms_Headache: 'Headache',
+  // symptoms_HeadacheTip: undefined,
+  // symptoms_MusclePainOrJointPain: 'Muscle pain or joint pain',
+  // symptoms_MusclePainOrJointPainTip: undefined,
+  // symptoms_ShortnessOfBreath: 'Shortness of breath',
+  // symptoms_ShortnessOfBreathTip: undefined,
+  // symptoms_SoreThroat: 'Sore throat',
+  // symptoms_SoreThroatTip: undefined,
+  // symptoms_SputumProduction: 'Sputum production',
+  // symptoms_SputumProductionTip: undefined,
+  symptoms_Tip: 'Jak se dnes cítíte? Prosím zadejte své příznaky!',
 
   profile_Age: 'Věk',
   profile_Intro: 'Řekněte nám prosím něco málo o sobě nebo vašem bližním.',
   profile_Name: 'Jméno',
   profile_Sex: 'Pohlaví',
+
+  qrcode_Tip: 'Tento kód reprezentje vaší totožnost.'
+      + ' Ukažte jej prosím laboratoři a dostanete výsledky přímo do vaší aplikace!',
+
+  resources_Url: 'https://koronavirus.mzcr.cz/',
+
+  welcome_Tip: 'Děkujeme, že s námi bojujete!',
+  welcome_Title: 'Vítejte!',
 }

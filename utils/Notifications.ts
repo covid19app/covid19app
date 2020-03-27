@@ -1,10 +1,16 @@
 import { Notifications } from 'expo';
 import * as Permissions from 'expo-permissions';
-import { DeviceInfo, getDeviceInfo, saveDeviceInfo } from './Device';
+import { getDeviceEntity, saveDeviceEntity } from './Device';
 import { publishEvent } from './Events';
-import { DeviceNotificationEvent } from './schema';
+import { DeviceEntity, DeviceNotificationEvent } from './schema';
 
-export async function registerForPushNotificationsAsync(): Promise<DeviceInfo> {
+export async function registerForPushNotificationsAsync(): Promise<DeviceEntity> {
+  const deviceEntity = getDeviceEntity()
+  if (deviceEntity.pushNotificationToken) {
+    // We already have the token. We have nothing more to send.
+    return deviceEntity
+  }
+
   const { status } = await Permissions.askAsync(Permissions.NOTIFICATIONS)
   // only asks if permissions have not already been determined, because
   // iOS won't necessarily prompt the user a second time.
@@ -16,17 +22,19 @@ export async function registerForPushNotificationsAsync(): Promise<DeviceInfo> {
     return
   }
 
-  const deviceInfo = getDeviceInfo()
   const pushNotificationToken = await Notifications.getExpoPushTokenAsync()
 
-  const updatedDeviceInfo: DeviceInfo = {...deviceInfo, pushNotificationToken}
+  const updatedDeviceEntity: DeviceEntity = {...deviceEntity, pushNotificationToken}
   const deviceNotificationEvent: DeviceNotificationEvent = {
-    deviceId: deviceInfo.deviceId,
+    deviceId: deviceEntity.deviceId,
     pushNotificationToken
   }
   await Promise.all([
-    saveDeviceInfo(updatedDeviceInfo),
-    publishEvent(`/v1/device/${deviceInfo.deviceId}/notification`, deviceNotificationEvent),
+    saveDeviceEntity(updatedDeviceEntity),
+    publishEvent(`/v1/device/${deviceEntity.deviceId}/notification`, deviceNotificationEvent),
   ])
-  return updatedDeviceInfo
+  return updatedDeviceEntity
 }
+
+const addNotificationListener = Notifications.addListener
+export { addNotificationListener }

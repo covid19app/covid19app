@@ -2,9 +2,10 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import Color from '../constants/Color';
+import { getDeviceEntity, savePersonEntity } from '../utils/Device';
 import { publishEvent } from '../utils/Events';
 import { t, tkeys } from '../utils/i18n';
-import { PersonProfileEvent, Sex } from '../utils/schema';
+import { PersonEntity, PersonProfileEvent, Sex } from '../utils/schema';
 import ActionButton from './ActionButton';
 import NamedPicker from './NamedPicker';
 import NamedTextInput from './NamedTextInput';
@@ -12,18 +13,21 @@ import NamedTextInput from './NamedTextInput';
 const SexKeys = Object.keys(Sex).filter(key => !isNaN(Number(Sex[key])))
 
 export interface PersonProfileFormProps {
-  personId: string
-  onSubmit?: (form: PersonProfileEvent) => void
+  personEntity: PersonEntity
+  onSubmit: (form: PersonEntity) => void
   onSkip?: () => void
 }
 
 export function PersonProfileForm(props: PersonProfileFormProps) {
-  const blankPersonProfileEvent = {personId: props.personId, deleted: false} as PersonProfileEvent
-  const [personProfile, setPersonProfile] = React.useState<PersonProfileEvent>(blankPersonProfileEvent)
+  const [personProfile, setPersonProfile] = React.useState<PersonProfileEvent>(props.personEntity)
 
   const submitPersonProfile = async () => {
-    const response = await publishEvent(`/v1/person/${props.personId}/profile`, personProfile)
-    props.onSubmit(personProfile)
+    const personEntity: PersonEntity = {...personProfile, deviceId: getDeviceEntity().deviceId}
+    await Promise.all([
+      savePersonEntity(personEntity),
+      publishEvent(`/v1/person/${personProfile.personId}/profile`, personProfile),
+    ])
+    props.onSubmit(personEntity)
   }
 
   return (
@@ -46,11 +50,13 @@ export function PersonProfileForm(props: PersonProfileFormProps) {
           items={SexKeys} selectedValue={personProfile.sex}
           onValueChange={item => setPersonProfile({...personProfile, sex: item})} />
       </ScrollView>
-      <ActionButton
-        color={Color.secondaryAction}
-        title={t(tkeys.generic_Skip)}
-        onPress={props.onSkip}
-      />
+      { props.onSkip &&
+        <ActionButton
+          color={Color.secondaryAction}
+          title={t(tkeys.generic_Skip)}
+          onPress={props.onSkip}
+        />
+      }
       <ActionButton
         color={Color.defaultAction}
         title={t(tkeys.generic_Submit)}

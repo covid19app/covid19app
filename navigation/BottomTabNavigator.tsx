@@ -1,38 +1,50 @@
 import { createBottomTabNavigator } from '@react-navigation/bottom-tabs';
+import { NavigationContainerRef, useLinking as useLinkingRN } from '@react-navigation/native';
+import { Linking } from 'expo';
 import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
-import CdcScreen from '../screens/CdcScreen';
 import FamilyScreen from '../screens/FamilyScreen';
+import HealthScreen from '../screens/HealthScreen';
 import LabScreen from '../screens/LabScreen';
+import NextStepsScreen from '../screens/NextStepsScreen';
 import PairScreen from '../screens/PairScreen';
-import PersonScreen from '../screens/PersonScreen';
 import QrCodeScreen from '../screens/QrCodeScreen';
+import ResourcesScreen from '../screens/ResourcesScreen';
+import { PersonEntityContext } from '../utils/Device';
+import { t, tkeys } from '../utils/i18n';
 
-const INITIAL_ROUTE_NAME = 'Person'
+const INITIAL_ROUTE_NAME = 'Health'
 
 const BottomTab = createBottomTabNavigator()
+
+function personalize(value: string): string {
+  const { personEntity } = React.useContext(PersonEntityContext)
+  return value.replace('$PERSON_NAME', personEntity?.name || t(tkeys.generic_DefaultPersonName))
+}
 
 function getHeaderTitle(route) {
   const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME
 
   switch (routeName) {
     case 'Pair':
-      return "Pair Person to a TestKit"
+      return t(tkeys.navigation_PairHeader)
     case 'Lab':
-      return "Lab Results"
-    case 'Person':
-      return "My Health"
+      return t(tkeys.navigation_LabHeader)
+    case 'Health':
+      return personalize(t(tkeys.navigation_HealthHeader))
+    case 'NextSteps':
+      return personalize(t(tkeys.navigation_NextStepsHeader))
     case 'QR':
-      return "My QR Code"
+      return personalize(t(tkeys.navigation_QRHeader))
     case 'Family':
-      return "My Family Health"
-    case 'CDC':
-      return "CDC (Disease Experts)"
+      return t(tkeys.navigation_FamilyHeader)
+    case 'Resources':
+      return t(tkeys.navigation_ResourcesHeader)
   }
 }
 
-export default function BottomTabNavigator({ navigation, route }) {
+export function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) })
 
   return (
@@ -41,7 +53,7 @@ export default function BottomTabNavigator({ navigation, route }) {
         name='Pair'
         component={PairScreen}
         options={{
-          title: "Pair",
+          title: t(tkeys.navigation_PairIcon),
           tabBarIcon: (props) => <TabBarIcon {...props} name='md-link' />,
         }}
       />
@@ -49,23 +61,31 @@ export default function BottomTabNavigator({ navigation, route }) {
         name='Lab'
         component={LabScreen}
         options={{
-          title: "Lab",
+          title: t(tkeys.navigation_LabIcon),
           tabBarIcon: (props) => <TabBarIcon {...props} name='md-flask' />,
         }}
       />
       <BottomTab.Screen
-        name='Person'
-        component={PersonScreen}
+        name='Health'
+        component={HealthScreen}
         options={{
-          title: "Myself",
+          title: personalize(t(tkeys.navigation_HealthIcon)),
           tabBarIcon: (props) => <TabBarIcon {...props} name='md-person' />,
+        }}
+      />
+      <BottomTab.Screen
+        name='NextSteps'
+        component={NextStepsScreen}
+        options={{
+          title: personalize(t(tkeys.navigation_NextStepsIcon)),
+          tabBarIcon: (props) => <TabBarIcon {...props} name='md-information-circle' />,
         }}
       />
       <BottomTab.Screen
         name='QR'
         component={QrCodeScreen}
         options={{
-          title: "QR Code",
+          title: personalize(t(tkeys.navigation_QRIcon)),
           tabBarIcon: (props) => <TabBarIcon {...props} name='md-barcode' />,
         }}
       />
@@ -73,18 +93,42 @@ export default function BottomTabNavigator({ navigation, route }) {
         name='Family'
         component={FamilyScreen}
         options={{
-          title: "Family",
+          title: t(tkeys.navigation_FamilyIcon),
           tabBarIcon: (props) => <TabBarIcon {...props} name='md-people' />,
         }}
       />
       <BottomTab.Screen
-        name='CDC'
-        component={CdcScreen}
+        name='Resources'
+        component={ResourcesScreen}
         options={{
-          title: "CDC",
+          title: t(tkeys.navigation_ResourcesIcon),
           tabBarIcon: (props) => <TabBarIcon {...props} name='md-book' />,
         }}
       />
     </BottomTab.Navigator>
   )
+}
+
+export function useLinking(containerRef: React.RefObject<NavigationContainerRef>) {
+  return useLinkingRN(containerRef, {
+    prefixes: [
+      Linking.makeUrl('/'),
+      // 'https://covid19app.org',
+      // 'covid19app://',
+    ],
+    config: {
+      Root: {
+        path: 'Root',
+        screens: {
+          'Pair': 'pair',
+          'Lab': 'lab',
+          'Health': 'health',
+          'NextSteps': 'nextsteps',
+          'QR': 'qr',
+          'Family': 'family',
+          'Resources': 'resources',
+        },
+      },
+    },
+  })
 }

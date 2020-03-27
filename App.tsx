@@ -5,15 +5,15 @@ import { SplashScreen } from 'expo';
 import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as React from 'react';
-import { Platform, StatusBar, StyleSheet, Text, View } from 'react-native';
+import { Platform, StatusBar, StyleSheet, View } from 'react-native';
 
 import Color from './constants/Color';
-import BottomTabNavigator from './navigation/BottomTabNavigator';
-import useLinking from './navigation/useLinking';
+import { BottomTabNavigator, useLinking } from './navigation/BottomTabNavigator';
 import WelcomeScreen from './screens/WelcomeScreen';
-import { DeviceInfo, getDeviceInfo, loadOrCreateDeviceInfo, PersonIdContext, saveDeviceInfo } from './utils/Device';
-import { generatePersonId } from './utils/Ids';
-import { registerForPushNotificationsAsync } from './utils/Notifications';
+import { createFreshPersonEntity, getDeviceEntity, loadOrCreateDeviceEntity, loadPersonEntity, PersonEntityContext,
+    saveDeviceEntity } from './utils/Device';
+import { addNotificationListener, registerForPushNotificationsAsync } from './utils/Notifications';
+import { DeviceEntity, PersonEntity } from './utils/schema';
 
 const Stack = createStackNavigator()
 
@@ -22,9 +22,9 @@ interface AppProps {
 }
 
 export default function App(props: AppProps) {
-  const [isLoadingComplete, setLoadingComplete] = React.useState(false)
+  const [isLoadingComplete, setLoadingComplete] = React.useState<boolean>(false)
   const [initialState, setInitialState] = React.useState(undefined)
-  const [personId, setPersonId] = React.useState<string>()
+  const [personEntity, setPersonEntity] = React.useState<PersonEntity>()
   const containerRef = React.useRef<NavigationContainerRef>()
   const { getInitialState } = useLinking(containerRef)
 
@@ -32,15 +32,18 @@ export default function App(props: AppProps) {
     async function loadResourcesAndDataAsync() {
       try {
         SplashScreen.preventAutoHide()
-        const [initialNavigationState, fonts, deviceInfo] = await Promise.all([
+        const [initialNavigationState, fonts, deviceEntity] = await Promise.all([
           getInitialState(),
           Font.loadAsync({
             ...Ionicons.font,
           }),
-          loadOrCreateDeviceInfo(),
+          loadOrCreateDeviceEntity(),
         ])
+        if (deviceEntity.defaultPersonId) {
+          setPersonEntity(await loadPersonEntity(deviceEntity.defaultPersonId))
+        }
         setInitialState(initialNavigationState)
-        setPersonId(deviceInfo?.defaultPersonId)
+        registerForPushNotificationsAsync()
       } catch (error) {
         // We might want to provide this error information to an error reporting service
         console.warn(error)
@@ -57,22 +60,18 @@ export default function App(props: AppProps) {
     return null
   }
 
-  if (!personId) {
-    const freshPersonId = generatePersonId()
-    const handleProfileSubmit = async () => {
-      const updatedDeviceInfo: DeviceInfo = {...getDeviceInfo(), defaultPersonId: freshPersonId}
-      setPersonId(freshPersonId)
-      saveDeviceInfo(updatedDeviceInfo)
+  if (!personEntity) {
+    const freshPersonEntity = createFreshPersonEntity()
+    const handleProfileSubmit = async (form: PersonEntity) => {
+      const updatedDeviceEntity: DeviceEntity = {...getDeviceEntity(), defaultPersonId: freshPersonEntity.personId}
+      saveDeviceEntity(updatedDeviceEntity)
+      setPersonEntity(form)
     }
-    return (
-      <WelcomeScreen personId={freshPersonId} onSubmit={handleProfileSubmit} onSkip={handleProfileSubmit} />
-    )
+    return <WelcomeScreen personEntity={freshPersonEntity} onSubmit={handleProfileSubmit} />
   }
 
-  registerForPushNotificationsAsync()
-
-  return (
-    <PersonIdContext.Provider value={personId}>
+  const root = (
+    <PersonEntityContext.Provider value={{personEntity, setPersonEntity}}>
       <View style={styles.container}>
         {Platform.OS === 'ios' && <StatusBar barStyle='default' />}
         <NavigationContainer ref={containerRef} initialState={initialState}>
@@ -81,8 +80,15 @@ export default function App(props: AppProps) {
           </Stack.Navigator>
         </NavigationContainer>
       </View>
-    </PersonIdContext.Provider>
+    </PersonEntityContext.Provider>
   )
+
+  // TODO: Solve the race condition better?
+  addNotificationListener(n => {
+    containerRef.current?.navigate('NextSteps', { nextSteps: n.data })
+  })
+
+  return root
 }
 
 const styles = StyleSheet.create({

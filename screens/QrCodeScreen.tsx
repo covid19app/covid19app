@@ -2,18 +2,19 @@ import * as React from 'react';
 import { StyleSheet, Text, View } from 'react-native';
 import QRCode from 'react-native-qrcode-svg';
 
+import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 import { getPersonUrl } from '../utils/Api';
-import { PersonIdContext } from '../utils/Device';
+import { PersonEntityContext } from '../utils/Device';
+import { t, tkeys } from '../utils/i18n';
 
 export default function QrCodeScreen() {
-  const personId = React.useContext(PersonIdContext)
+  const { personEntity } = React.useContext(PersonEntityContext)
   return (
     <View style={styles.container}>
-      <Text style={styles.tip}>This code represents your personal id.
-          Share it with the lab and get the result delivered to your phone!</Text>
-      <QRCode value={getPersonUrl(personId)} size={0.9 * Layout.innerSize} />
-      <Text style={styles.personIdText}>{personId}</Text>
+      <Text style={styles.tip}>{t(tkeys.qrcode_Tip)}</Text>
+      <QRCode value={getPersonUrl(personEntity?.personId)} size={0.9 * Layout.innerSize} />
+      <Text style={styles.personIdText}>{personEntity?.personId}</Text>
     </View>
   )
 }
@@ -22,6 +23,7 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
+    backgroundColor: Color.background,
   },
   tip: {
     fontSize: Layout.fontSize,

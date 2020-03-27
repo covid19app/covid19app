@@ -1,6 +1,11 @@
 export enum TranslationKeys {
+  family_AddNewPerson,
+
   generic_CameraRequestingPermissions,
   generic_CameraMissingPermissions,
+  generic_Cancel,
+  generic_DefaultPersonName,
+  generic_OpenExternalLink,
   generic_Person,
   generic_PersonIdPrompt,
   generic_Skip,
@@ -8,18 +13,56 @@ export enum TranslationKeys {
   generic_TestKit,
   generic_TestIdPrompt,
 
+  health_EnterSymptoms,
+
   lab_Infected,
   lab_NotInfected,
 
+  navigation_FamilyHeader,
+  navigation_FamilyIcon,
+  navigation_HealthHeader,
+  navigation_HealthIcon,
+  navigation_LabHeader,
+  navigation_LabIcon,
+  navigation_NextStepsHeader,
+  navigation_NextStepsIcon,
+  navigation_PairHeader,
+  navigation_PairIcon,
+  navigation_QRHeader,
+  navigation_QRIcon,
+  navigation_ResourcesHeader,
+  navigation_ResourcesIcon,
+
+  symptoms_Chills,
+  symptoms_ChillsTip,
   symptoms_DryCough,
   symptoms_DryCoughTip,
   symptoms_Fatigue,
   symptoms_FatigueTip,
   symptoms_Fever,
   symptoms_FeverTip,
+  symptoms_Headache,
+  symptoms_HeadacheTip,
+  symptoms_MusclePainOrJointPain,
+  symptoms_MusclePainOrJointPainTip,
+  symptoms_ShortnessOfBreath,
+  symptoms_ShortnessOfBreathTip,
+  symptoms_SoreThroat,
+  symptoms_SoreThroatTip,
+  symptoms_SputumProduction,
+  symptoms_SputumProductionTip,
+  symptoms_Tip,
 
   profile_Age,
   profile_Intro,
   profile_Name,
   profile_Sex,
+
+  qrcode_Tip,
+
+  // TODO: This does not belog here. It should be per country, not per language.
+  resources_Url,
+
+  welcome_Tip,
+  welcome_Title,
 }

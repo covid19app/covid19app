@@ -22,14 +22,11 @@ export default function SymptomsForm(props: SymptomsFormProps) {
   const submitPersonSymptomsEvent = async () => {
     const response = await publishEvent(`/v1/person/${props.personId}/symptoms`, symptoms)
     props.onSubmitResponse(response as NextSteps)
-    // const labHref = 'https://www.google.com/maps/search/?api=1&query=hospital'
-    // const html = `<a style="font-size: 40px;" href="${labHref}">Go to nearest lab please!!!</a>`
-    // props.onSubmitResponse({ action: 'GET_TESTED', html: html, externalLink: labHref } as NextSteps)
   }
 
   return (
     <View style={styles.container}>
-      <Text>How do you feel today? Enter your symptoms please!</Text>
+      <Text>{t(tkeys.symptoms_Tip)}</Text>
       <ScrollView style={styles.symptomContainer}>
         <FeverSlider feverInCelsius={symptoms.feverInCelsius}
             onValueChange={valueInC => setSymptoms({...symptoms, feverInCelsius: valueInC})} />
@@ -37,18 +34,21 @@ export default function SymptomsForm(props: SymptomsFormProps) {
             value={!!symptoms.dryCough} onValueChange={value => setSymptoms({...symptoms, dryCough: +value})} />
         <SymptomSwitch title={t(tkeys.symptoms_Fatigue)} tip={t(tkeys.symptoms_FatigueTip)}
             value={!!symptoms.fatigue} onValueChange={value => setSymptoms({...symptoms, fatigue: +value})} />
-        <SymptomSwitch title="Sputum production" value={!!symptoms.sputumProduction}
+        <SymptomSwitch title={t(tkeys.symptoms_SputumProduction)} tip={t(tkeys.symptoms_SputumProductionTip)}
+            value={!!symptoms.sputumProduction}
             onValueChange={value => setSymptoms({...symptoms, sputumProduction: +value})} />
-        <SymptomSwitch title="Shortness of breath" value={!!symptoms.shortnessOfBreath}
+        <SymptomSwitch title={t(tkeys.symptoms_ShortnessOfBreath)} tip={t(tkeys.symptoms_ShortnessOfBreathTip)}
+            value={!!symptoms.shortnessOfBreath}
             onValueChange={value => setSymptoms({...symptoms, shortnessOfBreath: +value})} />
-        <SymptomSwitch title="Muscle pain or joint pain" value={!!symptoms.musclePainOrJointPain}
+        <SymptomSwitch title={t(tkeys.symptoms_MusclePainOrJointPain)} tip={t(tkeys.symptoms_MusclePainOrJointPainTip)}
+            value={!!symptoms.musclePainOrJointPain}
             onValueChange={value => setSymptoms({...symptoms, musclePainOrJointPain: +value})} />
-        <SymptomSwitch title="Sore throat" value={!!symptoms.soreThroat}
-            onValueChange={value => setSymptoms({...symptoms, soreThroat: +value})} />
-        <SymptomSwitch title="Headache" value={!!symptoms.headache}
-            onValueChange={value => setSymptoms({...symptoms, headache: +value})} />
-        <SymptomSwitch title="Chills" value={!!symptoms.chills}
-            onValueChange={value => setSymptoms({...symptoms, chills: +value})} />
+        <SymptomSwitch title={t(tkeys.symptoms_SoreThroat)} tip={t(tkeys.symptoms_SoreThroatTip)}
+            value={!!symptoms.soreThroat} onValueChange={value => setSymptoms({...symptoms, soreThroat: +value})} />
+        <SymptomSwitch title={t(tkeys.symptoms_Headache)} tip={t(tkeys.symptoms_HeadacheTip)}
+            value={!!symptoms.headache} onValueChange={value => setSymptoms({...symptoms, headache: +value})} />
+        <SymptomSwitch title={t(tkeys.symptoms_Chills)} tip={t(tkeys.symptoms_ChillsTip)}
+            value={!!symptoms.chills} onValueChange={value => setSymptoms({...symptoms, chills: +value})} />
       </ScrollView>
       <ActionButton title={t(tkeys.generic_Submit)} onPress={submitPersonSymptomsEvent} />
     </View>
