@@ -19,8 +19,8 @@ export default function BigImage(props: BigImageProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'column',
     alignItems: 'center',
+    flexDirection: 'column',
     margin: Layout.margin,
   },
   image: {

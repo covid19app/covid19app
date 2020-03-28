@@ -63,13 +63,13 @@ export default function BarcodeCamera(props: BarcodeCameraProps) {
 const styles = StyleSheet.create({
   reverseButton: {
     position: 'absolute',
-    top: 0,
     right: 0,
+    top: 0,
   },
   reverseIcon: {
-    fontSize: Layout.hugeFontSize,
-    padding: Layout.padding,
-    margin: Layout.margin,
     color: '#fff',
+    fontSize: Layout.hugeFontSize,
+    margin: Layout.margin,
+    padding: Layout.padding,
   },
 })

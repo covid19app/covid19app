@@ -2,7 +2,6 @@ import { Ionicons } from '@expo/vector-icons';
 import { NavigationContainer, NavigationContainerRef } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/stack';
 import { SplashScreen } from 'expo';
-import Constants from 'expo-constants';
 import * as Font from 'expo-font';
 import * as React from 'react';
 import { Platform, StatusBar, StyleSheet, View } from 'react-native';
@@ -93,8 +92,7 @@ export default function App(props: AppProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    // paddingTop: Constants.statusBarHeight,
     backgroundColor: Color.background,
+    flex: 1,
   },
 })

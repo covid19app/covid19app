@@ -14,22 +14,22 @@ export default function NamedTextInput(props: NamedTextInputProps) {
       <Text style={styles.title}>{props.title}</Text>
       <TextInput {...props} style={styles.textInpout} />
     </View>
-  );
+  )
 }
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     padding: Layout.padding,
   },
+  textInpout: {
+    backgroundColor: Color.inputBackground,
+    flex: 7,
+  },
   title: {
-    flex: 2,
     color: Color.text,
+    flex: 2,
     fontSize: Layout.fontSize,
   },
-  textInpout: {
-    flex: 7,
-    backgroundColor: Color.inputBackground,
-  },
-});
+})

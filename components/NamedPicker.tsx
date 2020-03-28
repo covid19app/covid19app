@@ -5,8 +5,8 @@ import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 
 interface NamedPickerProps extends PickerProps {
-  title: string
   items: any[]
+  title: string
 }
 
 export default function NamedPicker(props: NamedPickerProps) {
@@ -14,9 +14,7 @@ export default function NamedPicker(props: NamedPickerProps) {
     <View style={styles.container}>
       <Text style={styles.title}>{props.title}</Text>
       <Picker {...props} style={styles.picker}>
-        {props.items.map((item, index) => {
-          return <Picker.Item label={item} value={index} key={index}/>
-        })}
+        {props.items.map((item, index) => <Picker.Item label={item} value={index} key={index} />)}
       </Picker>
     </View>
   )
@@ -24,17 +22,17 @@ export default function NamedPicker(props: NamedPickerProps) {
 
 const styles = StyleSheet.create({
   container: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
     padding: Layout.padding,
   },
-  title: {
-    flex: 2,
-    color: Color.text,
-    fontSize: Layout.fontSize,
-  },
   picker: {
-    flex: 7,
     backgroundColor: Color.inputBackground,
+    flex: 7,
+  },
+  title: {
+    color: Color.text,
+    flex: 2,
+    fontSize: Layout.fontSize,
   },
 })

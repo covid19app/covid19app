@@ -12,8 +12,8 @@ export default function QrCodeScreen() {
   const { personEntity } = React.useContext(PersonEntityContext)
   return (
     <View style={styles.container}>
-      <Text style={styles.tip}>{t(tkeys.qrcode_Tip)}</Text>
-      <QRCode value={getPersonUrl(personEntity?.personId)} size={0.9 * Layout.innerSize} />
+      <Text style={styles.tipText}>{t(tkeys.qrcode_Tip)}</Text>
+      <QRCode value={getPersonUrl(personEntity?.personId)} size={0.8 * Layout.innerSize} />
       <Text style={styles.personIdText}>{personEntity?.personId}</Text>
     </View>
   )
@@ -21,15 +21,15 @@ export default function QrCodeScreen() {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
     alignItems: 'center',
     backgroundColor: Color.background,
-  },
-  tip: {
-    fontSize: Layout.fontSize,
-    padding: Layout.padding,
+    flex: 1,
   },
   personIdText: {
     fontSize: Layout.tinyFontSize,
+  },
+  tipText: {
+    fontSize: Layout.fontSize,
+    padding: Layout.padding,
   },
 })

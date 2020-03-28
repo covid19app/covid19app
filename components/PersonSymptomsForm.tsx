@@ -12,14 +12,14 @@ import ActionButton from './ActionButton';
 import SymptomButton from './SymptomButton';
 
 interface SymptomsFormProps {
-  personId: string
   onSubmitResponse?: (nextSteps: NextSteps) => void
+  personId: string
 }
 
 export default function PersonSymptomsForm(props: SymptomsFormProps) {
   const blankPersonSymptomsEvent = {
     personId: props.personId,
-    feverInCelsius: Config.DEFAULT_TEMERATURE_IN_C,
+    feverInCelsius: Config.TEMERATURE_DEFAULT_IN_C,
   } as PersonSymptomsEvent
   const [symptoms, setSymptoms] = React.useState(blankPersonSymptomsEvent)
 
@@ -42,10 +42,10 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
       <Row style={styles.row} size={0.8}>
         <Col style={styles.col}>
           <SymptomButton imageSource={require('../assets/symptoms/fever.png')}
-              active={symptoms.feverInCelsius > Config.FEVER_THRESHOLD_IN_C} />
+              active={symptoms.feverInCelsius > Config.TEMERATURE_FEVER_IN_C} />
         </Col>
         <Col style={styles.col}>
-          <Row />
+          <Row size={0.5} />
           <Row style={styles.row}>
             <Text style={styles.feverText}>
               {t(tkeys.symptoms_Fever)} {temperatureToString(symptoms.feverInCelsius)}
@@ -56,12 +56,12 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
           </Row>
           <Row style={styles.row}>
             <Slider style={styles.feverSlider}
-              minimumValue={Config.MIN_TEMERATURE_IN_C} maximumValue={Config.MAX_TEMPERATURE_IN_C}
+              minimumValue={Config.TEMERATURE_MIN_IN_C} maximumValue={Config.TEMERATURE_MAX_IN_C}
               minimumTrackTintColor={Color.infected} maximumTrackTintColor={Color.notInfected}
               value={symptoms.feverInCelsius}
               onValueChange={value => setSymptoms({...symptoms, feverInCelsius: value})} />
           </Row>
-          <Row />
+          <Row size={0.5} />
         </Col>
       </Row>
       <Row style={styles.row}>
@@ -114,15 +114,14 @@ const styles = StyleSheet.create({
   col: {
     alignItems: 'center',
   },
-  row: {
-    alignItems: 'center',
-  },
-
   feverSlider: {
     transform: [{ scaleX: 2.0 }, { scaleY: 2.0 }],
-    width: Layout.columnWidth / 2.0,
+    width: 1.2 * Layout.columnWidth / 2.0,
   },
   feverText: {
     fontSize: Layout.fontSize,
+  },
+  row: {
+    alignItems: 'center',
   },
 })

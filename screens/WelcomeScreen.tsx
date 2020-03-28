@@ -13,8 +13,8 @@ export default function WelcomeScreen(props: WelcomeScreenProps) {
   return (
     <View style={styles.container}>
       <View style={styles.headerContainer}>
-        <Image source={require('../assets/covid19-shield.256.png')} style={styles.headerIcon} />
-        <View style={styles.headerMessage}>
+        <Image source={require('../assets/virus_defence.png')} style={styles.headerImage} />
+        <View style={styles.headerTextContainer}>
           <Text style={styles.text}>{t(tkeys.welcome_Title)}</Text>
           <Text style={styles.text}>{t(tkeys.welcome_Tip)}</Text>
         </View>
@@ -35,25 +35,24 @@ const styles = StyleSheet.create({
     paddingBottom: 3 * Layout.fontSize,
     paddingTop: 3 * Layout.fontSize,
   },
+  formContainer: {
+    flex: 1,
+    flexGrow: 3,
+  },
   headerContainer: {
     flex: 1,
     flexDirection: 'row',
   },
-  headerIcon: {
-    backgroundColor: Color.inputBackground,
+  headerImage: {
     flex: 1,
     height: 0.25 * Layout.innerSize,
     margin: Layout.margin,
     resizeMode: 'contain',
-    width: Layout.columnWidth,
+    width: 0.25 * Layout.innerSize,
   },
-  headerMessage: {
+  headerTextContainer: {
     flex: 3,
     width: Layout.columnWidth,
-  },
-  formContainer: {
-    flex: 1,
-    flexGrow: 3,
   },
   text: {
     color: Color.text,

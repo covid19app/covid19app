@@ -5,10 +5,10 @@ import Color from '../constants/Color';
 import BigImage from './BigImage';
 
 interface SymptomButtonProps {
-  imageSource: ImageSourcePropType,
-  title?: string,
   active: boolean
+  imageSource: ImageSourcePropType,
   onPress?: () => void
+  title?: string,
 }
 
 export default function SymptomButton(props: SymptomButtonProps) {

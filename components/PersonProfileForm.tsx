@@ -14,9 +14,9 @@ import NamedTextInput from './NamedTextInput';
 const SexKeys = Object.keys(Sex).filter(key => !isNaN(Number(Sex[key])))
 
 export interface PersonProfileFormProps {
-  personEntity: PersonEntity
+  onCancel?: () => void
   onSubmit: (form: PersonEntity) => void
-  onSkip?: () => void
+  personEntity: PersonEntity
 }
 
 export function PersonProfileForm(props: PersonProfileFormProps) {
@@ -51,27 +51,19 @@ export function PersonProfileForm(props: PersonProfileFormProps) {
           items={SexKeys} selectedValue={personProfile.sex}
           onValueChange={item => setPersonProfile({...personProfile, sex: item})} />
       </ScrollView>
-      { props.onSkip &&
-        <ActionButton
-          color={Color.secondaryAction}
-          title={t(tkeys.generic_Skip)}
-          onPress={props.onSkip}
-        />
+      { props.onCancel &&
+        <ActionButton color={Color.secondaryAction} title={t(tkeys.generic_Cancel)} onPress={props.onCancel} />
       }
-      <ActionButton
-        color={Color.defaultAction}
-        title={t(tkeys.generic_Submit)}
-        onPress={submitPersonProfile}
-      />
+      <ActionButton color={Color.defaultAction} title={t(tkeys.generic_Submit)} onPress={submitPersonProfile} />
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Color.background,
     flex: 1,
     flexDirection: 'column',
-    backgroundColor: Color.background,
   },
   formContainer: {
     flex: 1,

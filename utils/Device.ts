@@ -1,5 +1,7 @@
+import Constants from 'expo-constants';
 import * as React from 'react';
 import { AsyncStorage } from 'react-native';
+
 import { getCurrentLocale, t, tkeys } from './i18n';
 import { generateDeviceId, generatePersonId } from './Ids';
 import { DeviceEntity } from './schema';
@@ -12,6 +14,7 @@ let cachedDeviceEntity: DeviceEntity
 export async function loadOrCreateDeviceEntity(): Promise<DeviceEntity> {
   cachedDeviceEntity = JSON.parse(await AsyncStorage.getItem(DEVICE_ENTITY_KEY))
   if (!cachedDeviceEntity) {
+    // cachedDeviceEntity = {deviceId: Constants.deviceId}
     cachedDeviceEntity = {deviceId: generateDeviceId()}
     saveDeviceEntity(cachedDeviceEntity)
   }

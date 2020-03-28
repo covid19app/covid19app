@@ -27,7 +27,8 @@ export default {
 
   inputBackground: primary,
 
-  selectedIcon: secondaryDark,
+  iconHidden: 'transparent',
+  iconSelected: secondaryDark,
 
   // errorBackground: 'red',
   // errorText: '#fff',

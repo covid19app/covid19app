@@ -1,23 +1,23 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { ActivityIndicator, GestureResponderEvent, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, StyleSheet, Text, TouchableOpacity } from 'react-native';
 
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 
 interface ActionButtonProps {
-  title?: string
   color?: string
   iconName?: string
-  onPress: (event: GestureResponderEvent) => void
+  onPress: () => void
+  title?: string
 }
 
 export default function ActionButton(props: ActionButtonProps) {
   const [isInProgress, setIsInprogress] = React.useState(false)
 
-  const onPress = async (event: GestureResponderEvent) => {
+  const onPress = async () => {
     setIsInprogress(true)
-    props.onPress(event)
+    props.onPress()
     setIsInprogress(false)
   }
 
@@ -32,11 +32,11 @@ export default function ActionButton(props: ActionButtonProps) {
 
 const styles = StyleSheet.create({
   button: {
-    flexDirection: 'row',
-    padding: Layout.padding,
-    margin: Layout.margin,
     alignItems: 'center',
+    flexDirection: 'row',
     justifyContent: 'center',
+    margin: Layout.margin,
+    padding: Layout.padding,
   },
   icon: {
     color: Color.text,
@@ -44,7 +44,7 @@ const styles = StyleSheet.create({
   },
   text: {
     color: Color.text,
-    margin: Layout.margin,
     fontSize: Layout.fontSize,
+    margin: Layout.margin,
   },
 })

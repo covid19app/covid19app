@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { Linking, StyleSheet, Text, View } from 'react-native';
+import { StyleSheet, View } from 'react-native';
 
 import PersonSymptomsForm from '../components/PersonSymptomsForm';
 import Color from '../constants/Color';
@@ -15,7 +15,6 @@ export default function HealthScreen({ navigation }) {
 
   return (
     <View style={styles.container}>
-      {/* <Image source={require('../assets/temperature_chart.png')} style={styles.temperatureChart} /> */}
       <PersonSymptomsForm personId={personEntity?.personId} onSubmitResponse={handleSubmitSymptoms} />
     </View>
   )

@@ -5,8 +5,8 @@ import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 
 interface TabBarIconProps {
-  name: string
   focused: boolean
+  name: string
   size: number
 }
 

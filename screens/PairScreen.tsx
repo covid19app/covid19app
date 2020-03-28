@@ -5,6 +5,7 @@ import { StyleSheet, Text, Vibration, View } from 'react-native';
 import ActionButton from '../components/ActionButton';
 import BarcodeCamera from '../components/BarcodeCamera';
 import Color from '../constants/Color';
+import Config from '../constants/Config';
 import Layout from '../constants/Layout';
 import { publishEvent } from '../utils/Events';
 import { t, tkeys } from '../utils/i18n';
@@ -20,11 +21,11 @@ export default function PairScreen() {
   const handleBarCodeScanned = ({ type, data }) => {
     if (personIdRegExp.test(data)) {
       setPersonId(personIdRegExp.exec(data)[1])
-      Vibration.vibrate(250)
+      Vibration.vibrate(Config.BARCODE_SCAN_VIBRATION_DURATION_IN_MS)
     }
     if (testIdRegExp.test(data)) {
       setTestId(testIdRegExp.exec(data)[1])
-      Vibration.vibrate(250)
+      Vibration.vibrate(Config.BARCODE_SCAN_VIBRATION_DURATION_IN_MS)
     }
   }
 
@@ -39,8 +40,8 @@ export default function PairScreen() {
     <View style={styles.container}>
       <BarcodeCamera type={Camera.Constants.Type.back} onBarCodeScanned={handleBarCodeScanned} />
       <View style={styles.formView}>
-        <Text style={styles.formDataText}>{t(tkeys.generic_Person)}: {personId}</Text>
-        <Text style={styles.formDataText}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+        <Text style={styles.text}>{t(tkeys.generic_Person)}: {personId}</Text>
+        <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
         <View style={styles.submitButtonView}>
           <ActionButton title={t(tkeys.generic_Submit)} onPress={submitTestPair} />
         </View>
@@ -59,11 +60,11 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     backgroundColor: Color.background,
   },
-  formDataText: {
+  submitButtonView: {
+    width: '100%',
+  },
+  text: {
     color: Color.text,
     fontSize: Layout.fontSize,
   },
-  submitButtonView: {
-    width: '100%',
-  }
 })

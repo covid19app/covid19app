@@ -5,6 +5,7 @@ import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, Vibration, View 
 
 import BarcodeCamera from '../components/BarcodeCamera';
 import Color from '../constants/Color';
+import Config from '../constants/Config';
 import Layout from '../constants/Layout';
 import { publishEvent } from '../utils/Events';
 import { t, tkeys } from '../utils/i18n';
@@ -16,7 +17,7 @@ export default function LabScreen() {
 
   const handleBarCodeScanned = ({ type, data }) => {
     setTestId(data)
-    Vibration.vibrate(250)
+    Vibration.vibrate(Config.BARCODE_SCAN_VIBRATION_DURATION_IN_MS)
   }
 
   const submitTestResult = async (labResult: LabResult) => {
@@ -31,18 +32,18 @@ export default function LabScreen() {
     <View style={styles.container}>
       <BarcodeCamera type={Camera.Constants.Type.front} onBarCodeScanned={handleBarCodeScanned} />
       <View style={styles.formView}>
-        <Text style={styles.formDataText}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+        <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
         <View style={styles.resultButtonsView}>
           <TouchableOpacity style={[styles.resultButton, { backgroundColor: Color.notInfected }]}
               onPress={ () => submitTestResult(LabResult.NOT_INFECTED) }>
             <LabResultButtonIcon iconName='md-thumbs-up'
                 isSubmitting={submittingLabResult === LabResult.NOT_INFECTED} />
-            <Text style={styles.resultButtonText}>{t(tkeys.lab_NotInfected)}</Text>
+            <Text style={styles.text}>{t(tkeys.lab_NotInfected)}</Text>
           </TouchableOpacity>
           <TouchableOpacity style={[styles.resultButton, { backgroundColor: Color.infected }]}
               onPress={ () => submitTestResult(LabResult.INFECTED) }>
             <LabResultButtonIcon iconName='md-thumbs-down' isSubmitting={submittingLabResult === LabResult.INFECTED} />
-            <Text style={styles.resultButtonText}>{t(tkeys.lab_Infected)}</Text>
+            <Text style={styles.text}>{t(tkeys.lab_Infected)}</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -60,35 +61,31 @@ function LabResultButtonIcon(props: { iconName: string, isSubmitting: boolean })
 
 const styles = StyleSheet.create({
   container: {
+    alignItems: 'stretch',
+    backgroundColor: Color.background,
     flex: 1,
     flexDirection: 'column',
-    alignItems: 'stretch',
     justifyContent: 'flex-end',
-    backgroundColor: Color.background,
   },
   formView: {
     alignItems: 'center',
     backgroundColor: Color.background,
   },
-  formDataText: {
-    color: Color.text,
-    fontSize: Layout.fontSize,
-  },
-  resultButtonsView: {
-    flexDirection: 'row',
-  },
   resultButton: {
-    flex: 1,
-    padding: Layout.padding,
-    margin: Layout.margin,
     alignItems: 'center',
+    flex: 1,
     justifyContent: 'center',
+    margin: Layout.margin,
+    padding: Layout.padding,
   },
   resultButtonIcon: {
     color: Color.text,
     fontSize: Layout.largeIconSize,
   },
-  resultButtonText: {
+  resultButtonsView: {
+    flexDirection: 'row',
+  },
+  text: {
     color: Color.text,
     fontSize: Layout.fontSize,
   },
