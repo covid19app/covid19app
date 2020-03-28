@@ -33,6 +33,21 @@ export default {
   navigation_ResourcesHeader: 'CDC (Disease Experts)',
   navigation_ResourcesIcon: 'Resources',
 
+  prevention_LimitTravel: 'Limit travel.',
+  prevention_SocialDistancing: 'Social distancing!',
+  prevention_WashYourHands: 'Wash your hands.',
+  prevention_WearFaceMask: 'Wear face mask.',
+
+  profile_Age: 'Age',
+  profile_Intro: 'Please tell a bit us about yourself.',
+  profile_Name: 'Name',
+  profile_Sex: 'Sex',
+
+  qrcode_Tip: 'This code represents your personal id.'
+      + ' Share it with the lab and get the result delivered to your phone!',
+
+  resources_Url: 'https://www.cdc.gov/coronavirus/2019-ncov/index.html',
+
   symptoms_Chills: 'Chills',
   symptoms_ChillsTip: 'TODO: add explanation',
   symptoms_DryCough: 'Dry cought',
@@ -52,16 +67,6 @@ export default {
   symptoms_SputumProduction: 'Sputum production',
   symptoms_SputumProductionTip: 'TODO: add explanation',
   symptoms_Tip: 'How do you feel today? Enter your symptoms please!',
-
-  profile_Age: 'Age',
-  profile_Intro: 'Please tell a bit us about yourself.',
-  profile_Name: 'Name',
-  profile_Sex: 'Sex',
-
-  qrcode_Tip: 'This code represents your personal id.'
-      + ' Share it with the lab and get the result delivered to your phone!',
-
-  resources_Url: 'https://www.cdc.gov/coronavirus/2019-ncov/index.html',
 
   welcome_Tip: 'Thank you joining us!',
   welcome_Title: 'Welcome!',

@@ -1,9 +1,9 @@
-import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
 import WebView from 'react-native-webview';
 
 import ActionButton from '../components/ActionButton';
+import Prevention from '../components/Prevention';
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 import { t, tkeys } from '../utils/i18n';
@@ -12,11 +12,7 @@ export default function NextStepsScreen({ route }) {
   const nextSteps = route.params?.nextSteps
 
   if (!nextSteps) {
-    return (
-      <View style={styles.container}>
-        <Ionicons name='md-happy' style={styles.bigIcon} />
-      </View>
-    )
+    return <Prevention />
   }
 
   return (
@@ -49,8 +45,4 @@ const styles = StyleSheet.create({
   },
   html: {
   },
-  bigIcon: {
-    fontSize: 0.9 * Layout.innerSize,
-    padding: 0.1 * Layout.innerSize,
-  }
 })

@@ -33,6 +33,21 @@ export default {
   navigation_ResourcesHeader: 'Ministerstvo zdravotnictví',
   navigation_ResourcesIcon: 'Informace',
 
+  prevention_LimitTravel: 'Omezte cestování.',
+  prevention_SocialDistancing: 'Žádné hromadné akce!',
+  prevention_WashYourHands: 'Myjte si ruce.',
+  prevention_WearFaceMask: 'Noste roušku.',
+
+  profile_Age: 'Věk',
+  profile_Intro: 'Řekněte nám prosím něco málo o sobě.',
+  profile_Name: 'Jméno',
+  profile_Sex: 'Pohlaví',
+
+  qrcode_Tip: 'Tento kód reprezentje vaší totožnost.'
+      + ' Ukažte jej prosím laboratoři a dostanete výsledky přímo do vaší aplikace!',
+
+  resources_Url: 'https://koronavirus.mzcr.cz/',
+
   symptoms_Chills: 'Podchalzení',
   symptoms_ChillsTip: undefined,
   symptoms_DryCough: 'Suchý kašel',
@@ -52,16 +67,6 @@ export default {
   symptoms_SputumProduction: 'Tvorba hlene',
   symptoms_SputumProductionTip: undefined,
   symptoms_Tip: 'Jak se dnes cítíte? Prosím zadejte své příznaky!',
-
-  profile_Age: 'Věk',
-  profile_Intro: 'Řekněte nám prosím něco málo o sobě.',
-  profile_Name: 'Jméno',
-  profile_Sex: 'Pohlaví',
-
-  qrcode_Tip: 'Tento kód reprezentje vaší totožnost.'
-      + ' Ukažte jej prosím laboratoři a dostanete výsledky přímo do vaší aplikace!',
-
-  resources_Url: 'https://koronavirus.mzcr.cz/',
 
   welcome_Tip: 'Děkujeme, že s námi bojujete!',
   welcome_Title: 'Vítejte!',

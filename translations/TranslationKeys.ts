@@ -33,6 +33,21 @@ export enum TranslationKeys {
   navigation_ResourcesHeader,
   navigation_ResourcesIcon,
 
+  prevention_LimitTravel,
+  prevention_SocialDistancing,
+  prevention_WashYourHands,
+  prevention_WearFaceMask,
+
+  profile_Age,
+  profile_Intro,
+  profile_Name,
+  profile_Sex,
+
+  qrcode_Tip,
+
+  // TODO: This does not belog here. It should be per country, not per language.
+  resources_Url,
+
   symptoms_Chills,
   symptoms_ChillsTip,
   symptoms_DryCough,
@@ -52,16 +67,6 @@ export enum TranslationKeys {
   symptoms_SputumProduction,
   symptoms_SputumProductionTip,
   symptoms_Tip,
-
-  profile_Age,
-  profile_Intro,
-  profile_Name,
-  profile_Sex,
-
-  qrcode_Tip,
-
-  // TODO: This does not belog here. It should be per country, not per language.
-  resources_Url,
 
   welcome_Tip,
   welcome_Title,
