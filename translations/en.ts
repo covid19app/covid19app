@@ -28,7 +28,7 @@ export default {
   navigation_NextStepsIcon: 'Next Steps',
   navigation_PairHeader: 'Pair Person to a TestKit',
   navigation_PairIcon: 'Pair',
-  navigation_QRHeader: 'Qr Code: $PERSON_NAME',
+  navigation_QRHeader: 'QR Code: $PERSON_NAME',
   navigation_QRIcon: 'QR Code',
   navigation_ResourcesHeader: 'CDC (Disease Experts)',
   navigation_ResourcesIcon: 'Resources',
@@ -43,7 +43,7 @@ export default {
   symptoms_FeverTip: 'Please measure yourself with a termometer and enter the result here.',
   symptoms_Headache: 'Headache',
   symptoms_HeadacheTip: 'TODO: add explanation',
-  symptoms_MusclePainOrJointPain: 'Muscle pain or joint pain',
+  symptoms_MusclePainOrJointPain: 'Muscle pain',
   symptoms_MusclePainOrJointPainTip: 'TODO: add explanation',
   symptoms_ShortnessOfBreath: 'Shortness of breath',
   symptoms_ShortnessOfBreathTip: 'TODO: add explanation',
@@ -54,7 +54,7 @@ export default {
   symptoms_Tip: 'How do you feel today? Enter your symptoms please!',
 
   profile_Age: 'Age',
-  profile_Intro: 'Please tell a bit us about yourself or your loved one.',
+  profile_Intro: 'Please tell a bit us about yourself.',
   profile_Name: 'Name',
   profile_Sex: 'Sex',
 

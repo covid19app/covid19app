@@ -3,7 +3,7 @@ import { Slider, StyleSheet, Text, View } from 'react-native';
 
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
-import { getCurrentLocale, t, tkeys } from '../utils/i18n';
+import { t, temperatureToString, tkeys } from '../utils/i18n';
 
 interface FeverSliderProps {
   feverInCelsius: number,
@@ -24,20 +24,6 @@ export default function FeverSlider(props: FeverSliderProps) {
       <Text style={styles.value}>{temperatureToString(props.feverInCelsius)}</Text>
     </View>
   )
-}
-
-function temperatureToString(temperatureInC: number): string {
-  // import * as RNLocalize from 'react-native-localize';
-  // const temperatureUnit = RNLocalize.getTemperatureUnit()
-  const temperatureUnit = getCurrentLocale().match(/.*[-_]US/i) && 'fahrenheit' || 'celsius'
-
-  switch (temperatureUnit) {
-    case 'celsius':
-      return `${temperatureInC && +temperatureInC.toFixed(1)} C`
-    case 'fahrenheit':
-      const temperatureInF = (temperatureInC * 9/5) + 32
-      return `${temperatureInF && +temperatureInF.toFixed(1)} F`
-  }
 }
 
 const styles = StyleSheet.create({

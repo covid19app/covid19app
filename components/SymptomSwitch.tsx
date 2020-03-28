@@ -1,7 +1,6 @@
 import { Ionicons } from '@expo/vector-icons';
 import * as React from 'react';
-import { StyleSheet, Switch, SwitchProps, Text, View } from 'react-native';
-import { TouchableOpacity } from 'react-native-gesture-handler';
+import { StyleSheet, Switch, SwitchProps, Text, TouchableOpacity, View } from 'react-native';
 
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
@@ -42,8 +41,8 @@ const styles = StyleSheet.create({
     flex: 8,
   },
   titleTouchable: {
-    flexDirection: 'row',
     alignItems: 'center',
+    flexDirection: 'row',
   },
   title: {
     color: Color.text,
@@ -61,8 +60,8 @@ const styles = StyleSheet.create({
     padding: Layout.padding,
   },
   tipIcon: {
-    fontSize: Layout.fontSize,
     color: Color.text,
+    fontSize: Layout.fontSize,
     paddingLeft: Layout.padding,
   },
 })

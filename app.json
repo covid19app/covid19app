@@ -11,9 +11,9 @@
     ],
     "version": "1.0.0",
     "orientation": "portrait",
-    "icon": "./assets/md-sunny.png",
+    "icon": "./assets/covid19-shield.256.png",
     "splash": {
-      "image": "./assets/md-sunny.png",
+      "image": "./assets/covid19-shield.256.png",
       "resizeMode": "contain",
       "backgroundColor": "#ffffff"
     },

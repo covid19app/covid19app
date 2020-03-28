@@ -2,6 +2,7 @@ import * as React from 'react';
 import { ScrollView, StyleSheet, Text, View } from 'react-native';
 
 import Color from '../constants/Color';
+import Layout from '../constants/Layout';
 import { getDeviceEntity, savePersonEntity } from '../utils/Device';
 import { publishEvent } from '../utils/Events';
 import { t, tkeys } from '../utils/i18n';
@@ -32,7 +33,7 @@ export function PersonProfileForm(props: PersonProfileFormProps) {
 
   return (
     <View style={styles.container}>
-      <Text>{t(tkeys.profile_Intro)}</Text>
+      <Text style={styles.intro}>{t(tkeys.profile_Intro)}</Text>
       <ScrollView style={styles.formContainer}>
         <NamedTextInput
           title={t(tkeys.profile_Name)}
@@ -75,5 +76,10 @@ const styles = StyleSheet.create({
   formContainer: {
     flex: 1,
     flexDirection: 'column',
+  },
+  intro: {
+    color: Color.text,
+    fontSize: Layout.fontSize,
+    padding: Layout.padding,
   },
 })

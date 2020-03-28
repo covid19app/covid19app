@@ -25,7 +25,7 @@ export default {
   background: primaryLight,
   text: primaryText,
 
-  inputBackground: primaryDark,
+  inputBackground: primary,
 
   selectedIcon: secondaryDark,
 
