@@ -13,12 +13,13 @@ interface ActionButtonProps {
 }
 
 export default function ActionButton(props: ActionButtonProps) {
-  const [isInProgress, setIsInprogress] = React.useState(false)
+  const [isInProgress, setIsInProgress] = React.useState(false)
 
   const onPress = async () => {
-    setIsInprogress(true)
-    props.onPress()
-    setIsInprogress(false)
+    setIsInProgress(true)
+    // TODO: Can we isInProgress after the onPress is finished without awrning of unused await?
+    await props.onPress()
+    setIsInProgress(false)
   }
 
   return (
