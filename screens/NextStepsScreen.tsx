@@ -1,9 +1,9 @@
 import * as React from 'react';
 import { Linking, StyleSheet, Text, View } from 'react-native';
-import WebView from 'react-native-webview';
 
 import ActionButton from '../components/ActionButton';
 import Prevention from '../components/Prevention';
+import WebBrowser from '../components/WebBrowser';
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 import { t, tkeys } from '../utils/i18n';
@@ -21,7 +21,7 @@ export default function NextStepsScreen({ route }) {
         <Text style={styles.text}>{nextSteps.text}</Text>
       }
       { !!nextSteps.html &&
-        <WebView style={styles.html} source={{ html: nextSteps.html }} />
+        <WebBrowser style={styles.html} originWhitelist={['*']} source={{ html: nextSteps.html }} />
       }
       { !!nextSteps.externalLink &&
         <ActionButton
