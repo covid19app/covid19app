@@ -4,10 +4,10 @@ export default {
   generic_CameraRequestingPermissions: 'Requesting for camera permission...',
   generic_CameraMissingPermissions: 'No access to camera! Please allow it!',
   generic_Cancel: 'Cancel',
-  generic_DefaultPersonName: 'Me',
   generic_OpenExternalLink: 'Open External Link',
   generic_Person: 'Person',
   generic_PersonIdPrompt: 'Scan the code please!',
+  generic_SelectPlease: 'Select please',
   generic_Skip: 'Skip',
   generic_Submit: 'Submit',
   generic_TestKit: 'TestKit',
@@ -39,8 +39,12 @@ export default {
   prevention_WearFaceMask: 'Wear face mask.',
 
   profile_Age: 'Age',
-  profile_Intro: 'Please tell a bit us about yourself.',
+  profile_Female: 'Female',
+  profile_Intro: 'Please tell us about yourself please.',
   profile_Name: 'Name',
+  profile_NameRequiredHint: 'Enter your name please!',
+  profile_NonBinary: 'Non Binary',
+  profile_Male: 'Male',
   profile_Sex: 'Sex',
 
   qrcode_Tip: 'This code represents your personal id.'

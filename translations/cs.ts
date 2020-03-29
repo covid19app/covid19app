@@ -4,10 +4,10 @@ export default {
   generic_CameraRequestingPermissions: 'Žádáme přístup ke kameře...',
   generic_CameraMissingPermissions: 'Applikace nemá přístup ke kameře! Prosím povolte ho!',
   generic_Cancel: 'Ukončit',
-  generic_DefaultPersonName: 'Já',
   generic_OpenExternalLink: 'Otevřít odkaz',
   generic_Person: 'Osoba',
   generic_PersonIdPrompt: 'Naskenujte kód prosím!',
+  generic_SelectPlease: 'Vyberte prosím',
   generic_Skip: 'Přeskočit',
   generic_Submit: 'Odeslat',
   generic_TestKit: 'TestKit',
@@ -39,8 +39,12 @@ export default {
   prevention_WearFaceMask: 'Noste roušku.',
 
   profile_Age: 'Věk',
+  profile_Female: 'Žena',
   profile_Intro: 'Řekněte nám prosím něco málo o sobě.',
   profile_Name: 'Jméno',
+  profile_NameRequiredHint: 'Zadejte prosím svoje jméno!',
+  profile_NonBinary: 'Nebinární',
+  profile_Male: 'Muž',
   profile_Sex: 'Pohlaví',
 
   qrcode_Tip: 'Tento kód reprezentje vaší totožnost.'

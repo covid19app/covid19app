@@ -57,7 +57,6 @@ export function createFreshPersonEntity(): PersonEntity {
   const freshPersonEntity: PersonEntity = {
     personId: generatePersonId(),
     deviceId: getDeviceEntity().deviceId,
-    name: t(tkeys.generic_DefaultPersonName),
     locale: getCurrentLocale(),
   }
   return freshPersonEntity
