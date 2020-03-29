@@ -2,8 +2,8 @@ import * as React from 'react';
 import { StyleSheet } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 
-import BigImage from '../components/BigImage';
 import { t, tkeys } from '../utils/i18n';
+import BigImageButton from './BigImageButton';
 
 interface PreventionProps {
 }
@@ -13,21 +13,25 @@ export default function Prevention(props: PreventionProps) {
     <Grid>
       <Row style={styles.row}>
         <Col style={styles.col}>
-          <BigImage source={require('../assets/prevention/social_distancing.png')}
+          <BigImageButton
+              imageSource={require('../assets/prevention/social_distancing.png')}
               title={t(tkeys.prevention_SocialDistancing)} />
         </Col>
         <Col style={styles.col}>
-          <BigImage source={require('../assets/prevention/limit_travel.png')}
+          <BigImageButton
+              imageSource={require('../assets/prevention/limit_travel.png')}
               title={t(tkeys.prevention_LimitTravel)} />
         </Col>
       </Row>
       <Row style={styles.row}>
         <Col style={styles.col}>
-          <BigImage source={require('../assets/prevention/wash_your_hands.png')}
+          <BigImageButton
+              imageSource={require('../assets/prevention/wash_your_hands.png')}
               title={t(tkeys.prevention_WashYourHands)} />
         </Col>
         <Col style={styles.col}>
-          <BigImage source={require('../assets/prevention/wear_face_mask.png')}
+          <BigImageButton
+              imageSource={require('../assets/prevention/wear_face_mask.png')}
               title={t(tkeys.prevention_WearFaceMask)} />
         </Col>
       </Row>

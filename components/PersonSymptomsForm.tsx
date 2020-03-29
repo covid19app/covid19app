@@ -9,7 +9,7 @@ import { publishEvent } from '../utils/Events';
 import { getCurrentLocale, t, temperatureToString, tkeys } from '../utils/i18n';
 import { ExperimentalEventInfo, NextSteps, PersonSymptomsEvent } from '../utils/schema';
 import ActionButton from './ActionButton';
-import SymptomButton from './SymptomButton';
+import BigImageButton, { BigImageButtonProps } from './BigImageButton';
 
 interface SymptomsFormProps {
   onSubmitResponse?: (nextSteps: NextSteps) => void
@@ -111,6 +111,15 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
       </Row>
     </Grid>
   )
+}
+
+interface SymptomButtonProps extends BigImageButtonProps {
+  active: boolean
+}
+
+function SymptomButton(props: SymptomButtonProps) {
+  const backgroundColor = props.active ? Color.infected : Color.iconHidden // || Color.notInfected
+  return <BigImageButton backgroundColor={backgroundColor} {...props} />
 }
 
 const styles = StyleSheet.create({
