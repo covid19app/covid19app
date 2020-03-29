@@ -1,9 +1,10 @@
-import { Ionicons } from '@expo/vector-icons';
 import { Camera } from 'expo-camera';
 import * as React from 'react';
-import { ActivityIndicator, StyleSheet, Text, TouchableOpacity, Vibration, View } from 'react-native';
+import { StyleSheet, Text, Vibration, View } from 'react-native';
+import { Col, Grid, Row } from 'react-native-easy-grid';
 
 import BarcodeCamera from '../components/BarcodeCamera';
+import BigImageButton from '../components/BigImageButton';
 import Color from '../constants/Color';
 import Config from '../constants/Config';
 import Layout from '../constants/Layout';
@@ -23,67 +24,66 @@ export default function LabScreen() {
   const submitTestResult = async (labResult: LabResult) => {
     const testResultEvent: TestResultEvent = { testId, labResult }
     setSubmittingLabResult(labResult)
-    setTestId(t(tkeys.generic_TestIdPrompt))
-    await publishEvent(`/v1/test/${testId}/result`, testResultEvent)
+    const response = await publishEvent(`/v1/test/${testId}/result`, testResultEvent)
+    // TODO: Better error handling!
+    if ((response as string).match(/OK/)) {
+      setTestId(t(tkeys.generic_TestIdPrompt))
+    } else {
+      setTestId(response as string)
+    }
     setSubmittingLabResult(LabResult.UNKNOWN)
   }
 
   return (
     <View style={styles.container}>
       <BarcodeCamera type={Camera.Constants.Type.front} onBarCodeScanned={handleBarCodeScanned} />
-      <View style={styles.formView}>
-        <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
-        <View style={styles.resultButtonsView}>
-          <TouchableOpacity style={[styles.resultButton, { backgroundColor: Color.notInfected }]}
-              onPress={ () => submitTestResult(LabResult.NOT_INFECTED) }>
-            <LabResultButtonIcon iconName='md-thumbs-up'
-                isSubmitting={submittingLabResult === LabResult.NOT_INFECTED} />
-            <Text style={styles.text}>{t(tkeys.lab_NotInfected)}</Text>
-          </TouchableOpacity>
-          <TouchableOpacity style={[styles.resultButton, { backgroundColor: Color.infected }]}
-              onPress={ () => submitTestResult(LabResult.INFECTED) }>
-            <LabResultButtonIcon iconName='md-thumbs-down' isSubmitting={submittingLabResult === LabResult.INFECTED} />
-            <Text style={styles.text}>{t(tkeys.lab_Infected)}</Text>
-          </TouchableOpacity>
-        </View>
-      </View>
+        <Grid style={styles.grid}>
+          <Row style={styles.row}>
+            <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+          </Row>
+          <Row style={styles.row}>
+            <Col style={styles.col}>
+              <BigImageButton
+                  backgroundColor={Color.notInfected}
+                  imageSource={require('../assets/virus_blocked.png')}
+                  isInProgress={submittingLabResult === LabResult.NOT_INFECTED}
+                  onPress={() => submitTestResult(LabResult.NOT_INFECTED)}
+                  title={t(tkeys.lab_NotInfected)}
+              />
+            </Col>
+            <Col style={styles.col}>
+              <BigImageButton
+                  backgroundColor={Color.infected}
+                  imageSource={require('../assets/virus.png')}
+                  isInProgress={submittingLabResult === LabResult.INFECTED}
+                  onPress={() => submitTestResult(LabResult.INFECTED)}
+                  title={t(tkeys.lab_Infected)}
+              />
+            </Col>
+          </Row>
+        </Grid>
     </View>
   )
 }
 
-function LabResultButtonIcon(props: { iconName: string, isSubmitting: boolean }) {
-  if (props.isSubmitting) {
-    return <ActivityIndicator color={Color.text} size='large' />
-  } else {
-    return <Ionicons name={props.iconName} style={styles.resultButtonIcon} />
-  }
-}
-
 const styles = StyleSheet.create({
+  col: {
+    alignItems: 'center',
+  },
   container: {
-    alignItems: 'stretch',
     backgroundColor: Color.background,
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
   },
-  formView: {
+  grid: {
     alignItems: 'center',
     backgroundColor: Color.background,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    right: 0,
   },
-  resultButton: {
+  row: {
     alignItems: 'center',
-    flex: 1,
-    justifyContent: 'center',
-    margin: Layout.margin,
-    padding: Layout.padding,
-  },
-  resultButtonIcon: {
-    color: Color.text,
-    fontSize: Layout.largeIconSize,
-  },
-  resultButtonsView: {
-    flexDirection: 'row',
   },
   text: {
     color: Color.text,
