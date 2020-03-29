@@ -53,6 +53,7 @@ export function PersonProfileForm(props: PersonProfileFormProps) {
         <Item picker>
           <Picker mode='dropdown' placeholder={t(tkeys.profile_Sex)}
             selectedValue={personProfile.sex} onValueChange={item => setPersonProfile({...personProfile, sex: item})}>
+            <Picker.Item label={t(tkeys.generic_SelectPlease)} value={Sex.UNKNOWN} />
             <Picker.Item label={t(tkeys.profile_Female)} value={Sex.FEMALE} />
             <Picker.Item label={t(tkeys.profile_Male)} value={Sex.MALE} />
             <Picker.Item label={t(tkeys.profile_NonBinary)} value={Sex.NON_BINARY} />
