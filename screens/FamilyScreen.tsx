@@ -11,7 +11,7 @@ import { createFreshPersonEntity, loadAllPersonEntities, PersonEntityContext } f
 import { t, tkeys } from '../utils/i18n';
 import { PersonEntity } from '../utils/schema';
 
-export default function FamilyScreen() {
+export default function FamilyScreen({ navigation }) {
   const [editedPersonEntity, setEditedPersonEntity] = React.useState<PersonEntity>()
   const [personEntities, setPersonEntities] = React.useState<PersonEntity[]>()
   const { personEntity, setPersonEntity } = React.useContext(PersonEntityContext)
@@ -41,10 +41,15 @@ export default function FamilyScreen() {
     )
   }
 
+  const handleItemSelected = (item: PersonEntity) => {
+    setPersonEntity(item)
+    navigation.navigate('Health', { personEntity: item })
+  }
+
   const renderPersonItem = ({ item }) => {
     const iconStyle = personEntity.personId === item.personId ? {color: Color.iconSelected} : {color: Color.iconHidden}
     return (
-      <ListItem icon onPress={() => setPersonEntity(item)} onLongPress={() => setEditedPersonEntity(item)}>
+      <ListItem icon onPress={() => handleItemSelected(item)} onLongPress={() => setEditedPersonEntity(item)}>
         <Left>
           <Ionicons name='md-checkmark-circle' style={[styles.icon, iconStyle]} />
         </Left>

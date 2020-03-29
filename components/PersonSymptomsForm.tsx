@@ -21,7 +21,9 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
     personId: props.personId,
     feverInCelsius: Config.TEMERATURE_DEFAULT_IN_C,
   } as PersonSymptomsEvent
-  const [symptoms, setSymptoms] = React.useState(blankPersonSymptomsEvent)
+  const [symptoms, setSymptoms] = React.useState<PersonSymptomsEvent>(blankPersonSymptomsEvent)
+
+  React.useEffect(() => setSymptoms(blankPersonSymptomsEvent), [props.personId])
 
   const submitPersonSymptomsEvent = async () => {
     const personSymptomsEvent: PersonSymptomsEvent & ExperimentalEventInfo = {
@@ -29,6 +31,7 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
       locale: getCurrentLocale(),
     }
     const response = await publishEvent(`/v1/person/${props.personId}/symptoms`, personSymptomsEvent)
+    setSymptoms(blankPersonSymptomsEvent)
     props.onSubmitResponse(response as NextSteps)
   }
 
