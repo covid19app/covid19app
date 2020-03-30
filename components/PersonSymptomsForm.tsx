@@ -44,21 +44,24 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
       </Row> */}
       <Row style={styles.row} size={0.8}>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/fever.png')}
-              active={symptoms.feverInCelsius > Config.TEMERATURE_FEVER_IN_C} />
+          <SymptomButton
+              active={symptoms.feverInCelsius > Config.TEMERATURE_FEVER_IN_C}
+              imageSource={require('../assets/symptoms/fever.png')}
+              tip={t(tkeys.symptoms_TemperatureTip)}
+          />
         </Col>
         <Col style={styles.col}>
           <Row size={0.4} />
           <Row style={styles.row}>
-            <Text style={styles.feverText}>
-              {t(tkeys.symptoms_Fever)} {temperatureToString(symptoms.feverInCelsius)}
+            <Text numberOfLines={1} ellipsizeMode='head' style={styles.text}>
+              {t(tkeys.symptoms_Temperature)} {temperatureToString(symptoms.feverInCelsius)}
             </Text>
-            {/* <TextInput keyboardType='numeric' style={styles.feverInput}
+            {/* <TextInput keyboardType='numeric' style={styles.temperatureInput}
                 value={symptoms.feverInCelsius.toFixed(1)} onEndEditing={value => setFeverInCelsius(+value)} />
-            <Text style={styles.feverText}> C</Text> */}
+            <Text style={styles.temperatureText}> C</Text> */}
           </Row>
           <Row style={styles.row}>
-            <Slider style={styles.feverSlider}
+            <Slider style={styles.temperatureSlider}
               minimumValue={Config.TEMERATURE_MIN_IN_C} maximumValue={Config.TEMERATURE_MAX_IN_C}
               minimumTrackTintColor={Color.infected} maximumTrackTintColor={Color.notInfected}
               value={symptoms.feverInCelsius}
@@ -69,39 +72,59 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
       </Row>
       <Row style={styles.row}>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/cough.png')}
-              title={t(tkeys.symptoms_DryCough)} active={!!symptoms.dryCough}
-              onPress={() => setSymptoms({...symptoms, dryCough: toggle(symptoms.dryCough)})} />
+          <SymptomButton
+              active={!!symptoms.dryCough}
+              imageSource={require('../assets/symptoms/cough.png')}
+              onPress={() => setSymptoms({...symptoms, dryCough: toggle(symptoms.dryCough)})}
+              tip={t(tkeys.symptoms_CoughTip)}
+              title={t(tkeys.symptoms_Cough)}
+          />
         </Col>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/fatigue.png')}
-              title={t(tkeys.symptoms_Fatigue)}  active={!!symptoms.fatigue}
-              onPress={() => setSymptoms({...symptoms, fatigue: toggle(symptoms.fatigue)})} />
+          <SymptomButton
+              active={!!symptoms.fatigue}
+              imageSource={require('../assets/symptoms/fatigue.png')}
+              onPress={() => setSymptoms({...symptoms, fatigue: toggle(symptoms.fatigue)})}
+              tip={t(tkeys.symptoms_FatigueTip)}
+              title={t(tkeys.symptoms_Fatigue)}
+          />
         </Col>
       </Row>
       <Row style={styles.row}>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/shortness_of_breath.png')}
-              title={t(tkeys.symptoms_ShortnessOfBreath)} active={!!symptoms.shortnessOfBreath}
-              onPress={() => setSymptoms({...symptoms, shortnessOfBreath: toggle(symptoms.shortnessOfBreath)})} />
+          <SymptomButton
+              active={!!symptoms.shortnessOfBreath}
+              imageSource={require('../assets/symptoms/shortness_of_breath.png')}
+              onPress={() => setSymptoms({...symptoms, shortnessOfBreath: toggle(symptoms.shortnessOfBreath)})}
+              title={t(tkeys.symptoms_ShortnessOfBreath)}
+          />
         </Col>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/muscle_pain.png')}
-              title={t(tkeys.symptoms_MusclePainOrJointPain)} active={!!symptoms.musclePainOrJointPain}
+          <SymptomButton
+              active={!!symptoms.musclePainOrJointPain}
+              imageSource={require('../assets/symptoms/muscle_pain.png')}
               onPress={() => setSymptoms(
-                {...symptoms, musclePainOrJointPain: toggle(symptoms.musclePainOrJointPain)})} />
+                {...symptoms, musclePainOrJointPain: toggle(symptoms.musclePainOrJointPain)})}
+              title={t(tkeys.symptoms_MusclePain)}
+            />
         </Col>
       </Row>
       <Row style={styles.row}>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/sore_throat.png')}
-              title={t(tkeys.symptoms_SoreThroat)} active={!!symptoms.soreThroat}
-              onPress={() => setSymptoms({...symptoms, soreThroat: toggle(symptoms.soreThroat)})} />
+          <SymptomButton
+              active={!!symptoms.soreThroat}
+              imageSource={require('../assets/symptoms/sore_throat.png')}
+              onPress={() => setSymptoms({...symptoms, soreThroat: toggle(symptoms.soreThroat)})}
+              title={t(tkeys.symptoms_SoreThroat)}
+          />
         </Col>
         <Col style={styles.col}>
-          <SymptomButton imageSource={require('../assets/symptoms/headache.png')}
-              title={t(tkeys.symptoms_Headache)} active={!!symptoms.headache}
-              onPress={() => setSymptoms({...symptoms, headache: toggle(symptoms.headache)})} />
+          <SymptomButton
+              active={!!symptoms.headache}
+              imageSource={require('../assets/symptoms/headache.png')}
+              onPress={() => setSymptoms({...symptoms, headache: toggle(symptoms.headache)})}
+              title={t(tkeys.symptoms_Headache)}
+          />
         </Col>
       </Row>
       <Row style={styles.row} size={0.7}>
@@ -115,6 +138,7 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
 
 interface SymptomButtonProps extends BigImageButtonProps {
   active: boolean
+  tip?: string
 }
 
 function SymptomButton(props: SymptomButtonProps) {
@@ -126,14 +150,17 @@ const styles = StyleSheet.create({
   col: {
     alignItems: 'center',
   },
-  feverSlider: {
+  row: {
+    alignItems: 'center',
+  },
+  temperatureSlider: {
     transform: [{ scaleX: 2.0 }, { scaleY: 2.0 }],
     width: 1.2 * Layout.columnWidth / 2.0,
   },
-  feverText: {
+  text: {
     fontSize: Layout.fontSize,
   },
-  row: {
-    alignItems: 'center',
+  tipTitleText: {
+    fontSize: Layout.bigFontSize,
   },
 })
