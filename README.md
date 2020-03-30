@@ -4,7 +4,7 @@
 
 Mobile app(s) helping us fight the covid19 virus. Build by humans. Build for humans.
 
-This repository contains the actual mobile app. The backed is at [covid19app-server](https://github.com/covid19app/covid19app-server).
+This repository contains the actual mobile app. The backed is at [covid19server](https://github.com/covid19app/covid19server).
 
 
 ## Assumptions
@@ -29,31 +29,38 @@ Scale up testing is the highest priority!
 
 #### Mobile App(s)
 
-- [ ] Personal App: Enter symptoms (for a given timestamp).
+- [x] Personal App: Enter symptoms (for a given timestamp).
 
-- [ ] Personal App: Give recommendation: stay cool / go get test / call doctor / self quarantine.
+- [x] Personal App: Give recommendation: stay cool / go get test / call doctor / self quarantine.
 
-- [ ] Personal App: Deeplink to maps to navigate to nearest test sample collection location.
+- [x] Personal App: Deeplink to maps to navigate to nearest test sample collection location.
 
-- [ ] Personal App: Generate QR code for the lab collection heroes to scan and pair phone with the testkit.
+- [x] Personal App: Generate QR code for the lab collection heroes to scan and pair phone with the testkit.
 
-- [ ] Test Collection App: Pair QR code from person's phone (or paper) and pair it with bar code on testkit.
+- [x] Test Collection App: Pair QR code from person's phone (or paper) and pair it with bar code on testkit.
 
-- [ ] Lab App: Scan testkit barcode and enter result - infected or not.
+- [x] Lab App: Scan testkit barcode and enter result - infected or not.
 
-- [ ] Personal App: Get push notification with result.
+- [x] Personal App: Get push notification with result.
 
 - [ ] Collecting location - gps, wifi, bluetooth. Even if we don't use it on day one. We have to know if we met somebody infected. We don't need to know who. We do not want to blame. We just want to drive the virus out of existence.
+
+- [ ] Split the app into multiple dedicated apps for different users.
+
+- [ ] Build an app for doctors. How can we help them?
+
+- [ ] Allow contact tracing through eplicit social graph building (like scan qr code of a person i'm spending the day with).
 
 
 #### Server
 
-- [ ] Build the server.
-
-
-#### Analytics
+- [x] Build the server.
 
 - [ ] Public dashboard counting people symptomatic, tested, infected per day per zip, county, state, country, globe.
+
+- [ ] Contact tracing.
+
+- [ ] Integration with existing systems - EHR, unemplyment benefits, etc.
 
 
 ## How can I help?
@@ -79,3 +86,8 @@ Server - First version should be tonight...
 Server will run in one of the big cloud providers.
 
 Most of the interaction we need first are really just events. Not a chatty protocol. That simplify stuff. Entering symptoms, Pairing patient with test kit, entering test result are all just forms submitted upon completion.
+
+
+## Credits
+
+* The graphics is from [KP Arts](https://www.iconfinder.com/katsana24). Thank you!
