@@ -19,8 +19,9 @@ export default {
   tabIconDefault: primary,
   tabIconSelected: tintColor,
 
-  infected: '#ffa4a2', // = similar to secondary light but created from red instead of blue - light from red 300
+  // infected: '#ffa4a2', // = similar to secondary light but created from red instead of blue - light from red 300
   notInfected: '#b2fab4', // = secondary light - light from green 300
+  infected: '#ff8680', // red picked from the virus_blocked.svg
 
   background: primaryLight,
   text: primaryText,
