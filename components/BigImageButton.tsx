@@ -7,6 +7,7 @@ import Layout from '../constants/Layout';
 export interface BigButtonProps {
   backgroundColor?: string
   children?: React.ReactNode
+  onLongPress?: () => void
   onPress?: () => void
   title?: string,
 }
@@ -18,7 +19,7 @@ export function BigImage(props: ImageProps) {
 export function BigButton(props: BigButtonProps) {
   const style = [styles.button, props.backgroundColor && {backgroundColor: props.backgroundColor}]
   return (
-    <TouchableOpacity style={style} disabled={!props.onPress} onPress={props.onPress}>
+    <TouchableOpacity style={style} disabled={!props.onPress} onPress={props.onPress} onLongPress={props.onLongPress}>
       { props.children }
       { props.title && <Text style={styles.text}>{props.title}</Text> }
     </TouchableOpacity>
