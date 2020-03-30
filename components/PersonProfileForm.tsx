@@ -1,6 +1,6 @@
-import { Form, Input, Item, Label, Picker } from 'native-base';
+import { Form, Input, Item, Label, Picker, Text, View } from 'native-base';
 import * as React from 'react';
-import { StyleSheet, Text, View } from 'react-native';
+import { StyleSheet } from 'react-native';
 
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
@@ -60,9 +60,9 @@ export function PersonProfileForm(props: PersonProfileFormProps) {
           </Picker>
         </Item>
       </Form>
-      <ActionButton color={Color.defaultAction} title={t(tkeys.generic_Submit)} onPress={submitPersonProfile} />
+      <ActionButton info title={t(tkeys.generic_Submit)} onPress={submitPersonProfile} />
       { props.onCancel &&
-        <ActionButton color={Color.secondaryAction} title={t(tkeys.generic_Cancel)} onPress={props.onCancel} />
+        <ActionButton light title={t(tkeys.generic_Cancel)} onPress={props.onCancel} />
       }
     </View>
   )
@@ -79,10 +79,6 @@ const styles = StyleSheet.create({
     fontSize: Layout.fontSize,
     paddingLeft: Layout.padding,
     paddingRight: Layout.padding,
-  },
-  formContainer: {
-    flex: 1,
-    flexDirection: 'column',
   },
   intro: {
     color: Color.text,

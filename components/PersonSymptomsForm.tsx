@@ -39,7 +39,7 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
 
   return (
     <Grid>
-      {/* <Row style={styles.col} size={0.25}>
+      {/* <Row style={styles.row} size={0.25}>
         <Text style={{fontSize: Layout.smallFontSize}}>{t(tkeys.symptoms_Tip)}</Text>
       </Row> */}
       <Row style={styles.row} size={0.8}>
@@ -48,7 +48,7 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
               active={symptoms.feverInCelsius > Config.TEMERATURE_FEVER_IN_C} />
         </Col>
         <Col style={styles.col}>
-          <Row size={0.5} />
+          <Row size={0.4} />
           <Row style={styles.row}>
             <Text style={styles.feverText}>
               {t(tkeys.symptoms_Fever)} {temperatureToString(symptoms.feverInCelsius)}
@@ -64,7 +64,7 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
               value={symptoms.feverInCelsius}
               onValueChange={value => setSymptoms({...symptoms, feverInCelsius: value})} />
           </Row>
-          <Row size={0.5} />
+          <Row size={0.4} />
         </Col>
       </Row>
       <Row style={styles.row}>
@@ -104,9 +104,9 @@ export default function PersonSymptomsForm(props: SymptomsFormProps) {
               onPress={() => setSymptoms({...symptoms, headache: toggle(symptoms.headache)})} />
         </Col>
       </Row>
-      <Row style={styles.col} size={0.7}>
+      <Row style={styles.row} size={0.7}>
         <View style={StyleSheet.absoluteFill}>
-          <ActionButton title={t(tkeys.generic_Submit)} onPress={submitPersonSymptomsEvent} />
+          <ActionButton info title={t(tkeys.generic_Submit)} onPress={submitPersonSymptomsEvent} />
         </View>
       </Row>
     </Grid>

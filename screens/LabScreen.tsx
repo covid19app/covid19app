@@ -38,11 +38,11 @@ export default function LabScreen() {
     <View style={styles.container}>
       <BarcodeCamera type={Camera.Constants.Type.front} onBarCodeScanned={handleBarCodeScanned} />
       <Grid style={styles.grid}>
-        <Row style={styles.row}>
+        <Row>
           <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
         </Row>
-        <Row style={styles.row}>
-          <Col style={styles.col}>
+        <Row>
+          <Col>
             <BigImageButton
                 backgroundColor={Color.notInfected}
                 imageSource={require('../assets/virus_blocked.png')}
@@ -51,7 +51,7 @@ export default function LabScreen() {
                 title={t(tkeys.lab_NotInfected)}
             />
           </Col>
-          <Col style={styles.col}>
+          <Col>
             <BigImageButton
                 backgroundColor={Color.infected}
                 imageSource={require('../assets/virus.png')}
@@ -67,9 +67,6 @@ export default function LabScreen() {
 }
 
 const styles = StyleSheet.create({
-  col: {
-    alignItems: 'center',
-  },
   container: {
     backgroundColor: Color.background,
     flex: 1,
@@ -81,9 +78,6 @@ const styles = StyleSheet.create({
     left: 0,
     position: 'absolute',
     right: 0,
-  },
-  row: {
-    alignItems: 'center',
   },
   text: {
     color: Color.text,

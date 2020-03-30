@@ -1,6 +1,7 @@
 import { Camera } from 'expo-camera';
 import * as React from 'react';
 import { StyleSheet, Text, Vibration, View } from 'react-native';
+import { Grid, Row } from 'react-native-easy-grid';
 
 import ActionButton from '../components/ActionButton';
 import BarcodeCamera from '../components/BarcodeCamera';
@@ -39,26 +40,35 @@ export default function PairScreen() {
   return (
     <View style={styles.container}>
       <BarcodeCamera type={Camera.Constants.Type.back} onBarCodeScanned={handleBarCodeScanned} />
-      <View style={styles.formView}>
-        <Text style={styles.text}>{t(tkeys.generic_Person)}: {personId}</Text>
-        <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
-        <View style={styles.submitButtonView}>
-          <ActionButton title={t(tkeys.generic_Submit)} onPress={submitTestPair} />
-        </View>
-      </View>
+      <Grid style={styles.grid}>
+        <Row>
+          <Text style={styles.text}>{t(tkeys.generic_Person)}: {personId}</Text>
+        </Row>
+        <Row>
+          <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+        </Row>
+        <Row>
+          <View style={styles.submitButtonView}>
+            <ActionButton info title={t(tkeys.generic_Submit)} onPress={submitTestPair} />
+          </View>
+        </Row>
+      </Grid>
     </View>
   )
 }
 
 const styles = StyleSheet.create({
   container: {
+    backgroundColor: Color.background,
     flex: 1,
-    flexDirection: 'column',
-    justifyContent: 'flex-end',
   },
-  formView: {
+  grid: {
     alignItems: 'center',
     backgroundColor: Color.background,
+    bottom: 0,
+    left: 0,
+    position: 'absolute',
+    right: 0,
   },
   submitButtonView: {
     width: '100%',

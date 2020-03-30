@@ -1,7 +1,6 @@
-import { Ionicons } from '@expo/vector-icons';
-import { Body, Left, ListItem, Right, Text } from 'native-base';
+import { Body, Button, Container, Icon, Left, ListItem, Right, Text, View } from 'native-base';
 import * as React from 'react';
-import { FlatList, StyleSheet, TouchableOpacity, View } from 'react-native';
+import { FlatList, StyleSheet } from 'react-native';
 
 import ActionButton from '../components/ActionButton';
 import { PersonProfileForm } from '../components/PersonProfileForm';
@@ -51,15 +50,15 @@ export default function FamilyScreen({ navigation }) {
     return (
       <ListItem icon onPress={() => handleItemSelected(item)} onLongPress={() => setEditedPersonEntity(item)}>
         <Left>
-          <Ionicons name='md-checkmark-circle' style={[styles.icon, iconStyle]} />
+          <Icon name='md-checkmark-circle' style={iconStyle} />
         </Left>
         <Body>
           <Text style={styles.text}>{item.name || '???'}</Text>
         </Body>
         <Right>
-          <TouchableOpacity onPress={() => setEditedPersonEntity(item)}>
-            <Ionicons name='md-settings' style={styles.icon} />
-          </TouchableOpacity>
+          <Button transparent onPress={() => setEditedPersonEntity(item)}>
+            <Icon name='md-settings' style={styles.icon} />
+          </Button>
         </Right>
       </ListItem>
     )
@@ -68,12 +67,12 @@ export default function FamilyScreen({ navigation }) {
   const FlatListItemSeparator = () => <View style={styles.line} />
 
   return (
-    <View style={styles.container}>
+    <Container>
       <FlatList data={personEntities} keyExtractor={item => item.personId}
           renderItem={renderPersonItem} ItemSeparatorComponent={FlatListItemSeparator} />
-      <ActionButton iconName='md-add-circle' title={t(tkeys.family_AddNewPerson)}
+      <ActionButton info iconName='md-add-circle' title={t(tkeys.family_AddNewPerson)}
           onPress={() => setEditedPersonEntity(createFreshPersonEntity())} />
-    </View>
+    </Container>
   )
 }
 
@@ -87,11 +86,9 @@ const styles = StyleSheet.create({
     height: 0.1 * Layout.fontSize,
   },
   icon: {
-    fontSize: Layout.bigFontSize,
-    padding: Layout.padding,
+    color: Color.text,
   },
   text: {
     fontSize: Layout.bigFontSize,
-    padding: Layout.padding,
   },
 })
