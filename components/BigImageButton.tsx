@@ -1,5 +1,5 @@
 import * as React from 'react';
-import { ActivityIndicator, Image, ImageProps, ImageSourcePropType, StyleSheet, Text, TouchableOpacity } from 'react-native';
+import { ActivityIndicator, Image, ImageProps, ImageSourcePropType, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
@@ -16,11 +16,11 @@ export function BigImage(props: ImageProps) {
 }
 
 export function BigButton(props: BigButtonProps) {
-  const style = [styles.container, props.backgroundColor && {backgroundColor: props.backgroundColor}]
+  const style = [styles.button, props.backgroundColor && {backgroundColor: props.backgroundColor}]
   return (
     <TouchableOpacity style={style} disabled={!props.onPress} onPress={props.onPress}>
-      {props.children}
-      {props.title && <Text style={styles.text}>{props.title}</Text>}
+      { props.children }
+      { props.title && <Text style={styles.text}>{props.title}</Text> }
     </TouchableOpacity>
   )
 }
@@ -30,22 +30,25 @@ export interface BigImageButtonProps extends BigButtonProps {
   isInProgress?: boolean
 }
 
-export default function BigImageButton(props: BigImageButtonProps) {
+export function BigImageButton(props: BigImageButtonProps) {
   return (
-    <BigButton {...props} >
-      { props.isInProgress && <ActivityIndicator color={Color.text} size='large' /> }
-      { props.isInProgress || <BigImage source={props.imageSource} /> }
+    <BigButton {...(props as BigButtonProps)} >
+      <View style={styles.image}>
+        { props.isInProgress && <ActivityIndicator color={Color.text} size='large' /> }
+        { props.isInProgress || <BigImage source={props.imageSource} /> }
+      </View>
     </BigButton>
   )
 }
 
 const styles = StyleSheet.create({
-  container: {
+  button: {
     alignItems: 'center',
     flexDirection: 'column',
     margin: Layout.margin,
   },
   image: {
+    alignItems: 'center',
     height: 0.2 * Layout.innerSize - Layout.margin,
     resizeMode: 'contain',
     width: Layout.columnWidth - 2 * Layout.margin,

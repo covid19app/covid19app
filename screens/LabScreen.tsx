@@ -4,7 +4,7 @@ import { StyleSheet, Text, Vibration, View } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 
 import BarcodeCamera from '../components/BarcodeCamera';
-import BigImageButton from '../components/BigImageButton';
+import { BigImageButton } from '../components/BigImageButton';
 import Color from '../constants/Color';
 import Config from '../constants/Config';
 import Layout from '../constants/Layout';
@@ -37,31 +37,31 @@ export default function LabScreen() {
   return (
     <View style={styles.container}>
       <BarcodeCamera type={Camera.Constants.Type.front} onBarCodeScanned={handleBarCodeScanned} />
-        <Grid style={styles.grid}>
-          <Row style={styles.row}>
-            <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
-          </Row>
-          <Row style={styles.row}>
-            <Col style={styles.col}>
-              <BigImageButton
-                  backgroundColor={Color.notInfected}
-                  imageSource={require('../assets/virus_blocked.png')}
-                  isInProgress={submittingLabResult === LabResult.NOT_INFECTED}
-                  onPress={() => submitTestResult(LabResult.NOT_INFECTED)}
-                  title={t(tkeys.lab_NotInfected)}
-              />
-            </Col>
-            <Col style={styles.col}>
-              <BigImageButton
-                  backgroundColor={Color.infected}
-                  imageSource={require('../assets/virus.png')}
-                  isInProgress={submittingLabResult === LabResult.INFECTED}
-                  onPress={() => submitTestResult(LabResult.INFECTED)}
-                  title={t(tkeys.lab_Infected)}
-              />
-            </Col>
-          </Row>
-        </Grid>
+      <Grid style={styles.grid}>
+        <Row style={styles.row}>
+          <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+        </Row>
+        <Row style={styles.row}>
+          <Col style={styles.col}>
+            <BigImageButton
+                backgroundColor={Color.notInfected}
+                imageSource={require('../assets/virus_blocked.png')}
+                isInProgress={submittingLabResult === LabResult.NOT_INFECTED}
+                onPress={() => submitTestResult(LabResult.NOT_INFECTED)}
+                title={t(tkeys.lab_NotInfected)}
+            />
+          </Col>
+          <Col style={styles.col}>
+            <BigImageButton
+                backgroundColor={Color.infected}
+                imageSource={require('../assets/virus.png')}
+                isInProgress={submittingLabResult === LabResult.INFECTED}
+                onPress={() => submitTestResult(LabResult.INFECTED)}
+                title={t(tkeys.lab_Infected)}
+            />
+          </Col>
+        </Row>
+      </Grid>
     </View>
   )
 }

@@ -10,6 +10,8 @@ export default {
   GEO_DEFAULT_S2_LEVEL: 8,
   GEO_DEFAULT_ACCURACY: Location.Accuracy.Balanced,
 
+  INITIAL_ROUTE_NAME: 'Health',
+
   TEMERATURE_MIN_IN_C: 36.0,
   TEMERATURE_MAX_IN_C: 42.0,
   TEMERATURE_DEFAULT_IN_C: 37.0,

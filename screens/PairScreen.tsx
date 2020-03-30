@@ -31,9 +31,9 @@ export default function PairScreen() {
 
   const submitTestPair = async () => {
     const testPairEvent: TestPairEvent = { personId, testId }
+    await publishEvent(`/v1/test/${testId}/pair`, testPairEvent)
     setPersonId(t(tkeys.generic_PersonIdPrompt))
     setTestId(t(tkeys.generic_TestIdPrompt))
-    await publishEvent(`/v1/test/${testId}/pair`, testPairEvent)
   }
 
   return (

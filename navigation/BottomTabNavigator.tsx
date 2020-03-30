@@ -4,6 +4,7 @@ import { Linking } from 'expo';
 import * as React from 'react';
 
 import TabBarIcon from '../components/TabBarIcon';
+import Config from '../constants/Config';
 import FamilyScreen from '../screens/FamilyScreen';
 import HealthScreen from '../screens/HealthScreen';
 import LabScreen from '../screens/LabScreen';
@@ -14,17 +15,15 @@ import ResourcesScreen from '../screens/ResourcesScreen';
 import { PersonEntityContext } from '../utils/Device';
 import { t, tkeys } from '../utils/i18n';
 
-const INITIAL_ROUTE_NAME = 'Health'
-
 const BottomTab = createBottomTabNavigator()
 
 function personalize(value: string): string {
   const { personEntity } = React.useContext(PersonEntityContext)
-  return value.replace('$PERSON_NAME', personEntity?.name || t(tkeys.generic_DefaultPersonName))
+  return value.replace('$PERSON_NAME', personEntity?.name)
 }
 
 function getHeaderTitle(route) {
-  const routeName = route.state?.routes[route.state.index]?.name ?? INITIAL_ROUTE_NAME
+  const routeName = route.state?.routes[route.state.index]?.name ?? Config.INITIAL_ROUTE_NAME
 
   switch (routeName) {
     case 'Pair':
@@ -48,7 +47,7 @@ export function BottomTabNavigator({ navigation, route }) {
   navigation.setOptions({ headerTitle: getHeaderTitle(route) })
 
   return (
-    <BottomTab.Navigator initialRouteName={INITIAL_ROUTE_NAME}>
+    <BottomTab.Navigator initialRouteName={Config.INITIAL_ROUTE_NAME}>
       <BottomTab.Screen
         name='Pair'
         component={PairScreen}

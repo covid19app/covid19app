@@ -9,7 +9,7 @@ import { publishEvent } from '../utils/Events';
 import { getCurrentLocale, t, temperatureToString, tkeys } from '../utils/i18n';
 import { ExperimentalEventInfo, NextSteps, PersonSymptomsEvent } from '../utils/schema';
 import ActionButton from './ActionButton';
-import BigImageButton, { BigImageButtonProps } from './BigImageButton';
+import { BigImageButton, BigImageButtonProps } from './BigImageButton';
 
 interface SymptomsFormProps {
   onSubmitResponse?: (nextSteps: NextSteps) => void

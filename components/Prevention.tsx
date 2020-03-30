@@ -3,7 +3,7 @@ import { StyleSheet } from 'react-native';
 import { Col, Grid, Row } from 'react-native-easy-grid';
 
 import { t, tkeys } from '../utils/i18n';
-import BigImageButton from './BigImageButton';
+import { BigImageButton } from './BigImageButton';
 
 interface PreventionProps {
 }

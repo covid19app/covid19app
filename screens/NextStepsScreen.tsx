@@ -7,9 +7,10 @@ import WebBrowser from '../components/WebBrowser';
 import Color from '../constants/Color';
 import Layout from '../constants/Layout';
 import { t, tkeys } from '../utils/i18n';
+import { NextSteps } from '../utils/schema';
 
 export default function NextStepsScreen({ route }) {
-  const nextSteps = route.params?.nextSteps
+  const nextSteps = route.params?.nextSteps as NextSteps
 
   if (!nextSteps) {
     return <Prevention />
