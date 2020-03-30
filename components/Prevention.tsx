@@ -35,7 +35,6 @@ export default function Prevention(props: PreventionProps) {
               title={t(tkeys.prevention_WearFaceMask)} />
         </Col>
       </Row>
-      <Row size={2} style={styles.row} />
     </Grid>
   )
 }
