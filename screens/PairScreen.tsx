@@ -23,8 +23,7 @@ export default function PairScreen() {
     if (personIdRegExp.test(data)) {
       setPersonId(personIdRegExp.exec(data)[1])
       Vibration.vibrate(Config.BARCODE_SCAN_VIBRATION_DURATION_IN_MS)
-    }
-    if (testIdRegExp.test(data)) {
+    } else if (testIdRegExp.test(data)) {
       setTestId(testIdRegExp.exec(data)[1])
       Vibration.vibrate(Config.BARCODE_SCAN_VIBRATION_DURATION_IN_MS)
     }
@@ -42,10 +41,10 @@ export default function PairScreen() {
       <BarcodeCamera type={Camera.Constants.Type.back} onBarCodeScanned={handleBarCodeScanned} />
       <Grid style={styles.grid}>
         <Row>
-          <Text style={styles.text}>{t(tkeys.generic_Person)}: {personId}</Text>
+          <Text numberOfLines={1} style={styles.text}>{t(tkeys.generic_Person)}: {personId}</Text>
         </Row>
         <Row>
-          <Text style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
+          <Text numberOfLines={1} style={styles.text}>{t(tkeys.generic_TestKit)}: {testId}</Text>
         </Row>
         <Row>
           <View style={styles.submitButtonView}>
